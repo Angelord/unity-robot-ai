@@ -14,7 +14,9 @@ namespace MrRob.GameLogic {
 
 		public override void Step() {
 			
+
 		}
-		
+
+		//Find nearest unrevealed
 	}
 }

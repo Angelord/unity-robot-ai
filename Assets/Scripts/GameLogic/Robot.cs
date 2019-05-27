@@ -10,11 +10,13 @@ namespace MrRob.GameLogic {
         private bool treasureFound;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
         private RobotState curState = null;
+        private bool done;
 
         public RobotGame Map { get { return map; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
         public bool TreasureFound { get { return treasureFound; } }
+        public bool Done { get { return done; } set { done = value; } }
 
         public Robot(RobotGame map) {
             this.map = map;
@@ -29,10 +31,15 @@ namespace MrRob.GameLogic {
             EnterState("Searching");
         }
 
-        public bool TryMove(Point newPos) {
+        public void Step() {
+            if(curState != null) {
+                curState.Step();
+            }
+        }
 
-            if(newPos.X < 0 || newPos.Y < 0 || newPos.X >= map.Width || newPos.Y >= map.Length) {
-                return false;
+        public bool TryMove(Point newPos) {
+            if(!map.Contains(newPos)) {
+                throw new System.ArgumentException(string.Format("Move position {0} is outside map bounds!", newPos));
             }
 
             if(map.GetTile(newPos).Blocked) {
@@ -41,7 +48,7 @@ namespace MrRob.GameLogic {
             }
 
             //TODO : Check for cargo
-            
+
             position = newPos;
             return true;
         }

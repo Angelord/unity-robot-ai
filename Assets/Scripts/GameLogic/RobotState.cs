@@ -7,6 +7,8 @@ namespace MrRob.GameLogic {
 
 		private Robot robot;
 
+		protected Robot Robot { get { return robot; } }
+
 		public RobotState(Robot robot) {
 			this.robot = robot;
 		}

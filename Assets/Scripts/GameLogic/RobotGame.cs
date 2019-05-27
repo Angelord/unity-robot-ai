@@ -42,6 +42,10 @@ namespace MrRob.GameLogic  {
 			return result;
 		}
 
+		public bool Contains(Point pos) {
+            return (pos.X >= 0 && pos.Y >= 0 && pos.X < width && pos.Y < length);
+		}
+
 		public Tile GetTile(Point pos) {
 			return tiles[pos.X + pos.Y * width];
 		}
