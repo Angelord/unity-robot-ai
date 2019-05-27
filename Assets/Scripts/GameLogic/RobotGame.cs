@@ -9,6 +9,7 @@ namespace MrRob.GameLogic  {
 		private int length;
 		private Robot robot;
 		private Point goalPos;
+		private Tile[] tiles;
 		//Treasure 
 		//Tile[,]
 
@@ -22,6 +23,13 @@ namespace MrRob.GameLogic  {
 			this.length = length;
 			goalPos = new Point(width - 1, length - 1);
 
+			tiles = new Tile[width * length];
+			for(int y = 0; y < length; y++) {
+				for(int x = 0; x < width; x++) {
+					tiles[x + y * width] = new Tile(new Point(x, y));
+				}
+			}
+
 			robot = new Robot(this);
 		}
 
@@ -33,6 +41,10 @@ namespace MrRob.GameLogic  {
 			//	goal.step();
 
 			return result;
+		}
+
+		public Tile GetTile(Point pos) {
+			return tiles[pos.X + pos.Y * width];
 		}
 	}
 }
