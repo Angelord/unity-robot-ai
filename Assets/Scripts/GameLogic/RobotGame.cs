@@ -14,7 +14,6 @@ namespace MrRob.GameLogic  {
 
 		public int Width { get { return width; } }
 		public int Length { get { return length; } }
-		//public Treasure treasure { get; }
 		public Point RobotPosition { get { return robot.Position; } }
 		public Point GoalPosition { get { return goalPos; } }
 
@@ -23,12 +22,17 @@ namespace MrRob.GameLogic  {
 			this.length = length;
 			goalPos = new Point(width - 1, length - 1);
 
-
 			robot = new Robot(this);
 		}
 
 		public GameResult Run() {
-			return new GameResult();
+			GameResult result = new GameResult(this);
+
+			//do
+			//	robot.step();
+			//	goal.step();
+
+			return result;
 		}
 	}
 }
