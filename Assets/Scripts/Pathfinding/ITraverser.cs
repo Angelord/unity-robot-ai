@@ -7,7 +7,4 @@ namespace MrRob.Pathfinding {
         bool AddToResult(T node);
         int GetTraverseCost(T start, T end);
     }
-
-    //IVision traverser - returns 1 to everything. Mountains and forests non traversable.
-    //IUnitTraverser - 
 }
