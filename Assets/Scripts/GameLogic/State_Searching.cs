@@ -12,6 +12,9 @@ namespace MrRob.GameLogic {
 
 		}
 
+		public override void Step() {
+			
+		}
 		
 	}
 }

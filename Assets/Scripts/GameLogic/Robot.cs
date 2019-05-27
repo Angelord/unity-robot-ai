@@ -29,8 +29,21 @@ namespace MrRob.GameLogic {
             EnterState("Searching");
         }
 
-        public void Move(Point direction) {
-            position += direction;
+        public bool TryMove(Point newPos) {
+
+            if(newPos.X < 0 || newPos.Y < 0 || newPos.X >= map.Width || newPos.Y >= map.Length) {
+                return false;
+            }
+
+            if(map.GetTile(newPos).Blocked) {
+                SetTileRevealed(newPos);
+                return false;
+            }
+
+            //TODO : Check for cargo
+            
+            position = newPos;
+            return true;
         }
 
         public void Look(Point direction) {
