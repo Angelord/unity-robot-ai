@@ -16,5 +16,8 @@ namespace MrRob.GameLogic {
 
 		public virtual void OnExit() {
 		}
+
+		public virtual void Step() {
+		}
 	}
 }

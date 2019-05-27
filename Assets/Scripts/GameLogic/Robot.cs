@@ -4,10 +4,11 @@ namespace MrRob.GameLogic {
     public class Robot {
 
         private RobotGame map;
-        private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
-        private bool treasureFound;
-        private bool[] tilesRevealed;
         private Point position;
+        private bool[] tilesRevealed;
+        private bool treasureFound;
+        private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
+        private RobotState curState = null;
 
         public RobotGame Map { get { return map; } }
         public Point Position { get { return position; } }
@@ -17,6 +18,10 @@ namespace MrRob.GameLogic {
             this.map = map;
             this.position = Point.ZERO;
             tilesRevealed = new bool[map.Width * map.Length];
+
+            states.Add("Searching", new State_Searching(this));
+
+            EnterState("Searching");
         }
 
         public void SetTileRevealed(Point pos) {
@@ -28,7 +33,17 @@ namespace MrRob.GameLogic {
         }
     
         public void EnterState(string stateName) {
-            throw new System.NotImplementedException();
+
+            if(!states.ContainsKey(stateName)) {
+                throw new System.ArgumentException(string.Format("No state with name {} exists for the robot!", stateName));
+            }
+
+            if(curState == states[stateName]) { return; }
+
+            if(curState != null) { curState.OnExit(); }
+
+            curState = states[stateName];
+            curState.OnEnter();
         }
     }
 }

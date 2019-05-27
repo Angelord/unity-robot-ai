@@ -11,7 +11,6 @@ namespace MrRob.GameLogic  {
 		private Point goalPos;
 		private Tile[] tiles;
 		//Treasure 
-		//Tile[,]
 
 		public int Width { get { return width; } }
 		public int Length { get { return length; } }
