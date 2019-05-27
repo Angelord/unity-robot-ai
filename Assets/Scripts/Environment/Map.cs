@@ -9,9 +9,9 @@ namespace MrRob  {
 		[SerializeField] private GameObject blockPrefab;
 		[SerializeField] private GameObject goalPrefab;
 
-		private int _width;
-		private int _length;
-		private Point _goalPosition;
+		private int width;
+		private int length;
+		private Point goalPos;
 		//Treasure 
 		//Robot
 		//Tile[,]
@@ -19,16 +19,16 @@ namespace MrRob  {
 
 		//public Treasure treasure { get; }
 		//public Robot robot { get; }
-		public Point goalPosition { get { return _goalPosition; } }
+		public Point GoalPosition { get { return goalPos; } }
 
 		private void Start() {
 			Initialize(10, 10);
 		}
 
 		public void Initialize(int width, int length) {
-			this._width = width;
-			this._length = length;
-			_goalPosition = new Point(width - 1, length - 1);
+			this.width = width;
+			this.length = length;
+			goalPos = new Point(width - 1, length - 1);
 
 			for(int x = 0; x < width; x++) {
 				for(int y = 0; y < length; y++) {
@@ -37,13 +37,13 @@ namespace MrRob  {
 				}
 			}
 
-			Instantiate(goalPrefab, MapToWorldPos(_goalPosition), Quaternion.identity, this.transform);
+			Instantiate(goalPrefab, MapToWorldPos(goalPos), Quaternion.identity, this.transform);
 			//place robot
 			//place goal
 		}
 
 		private Vector3 MapToWorldPos(Point pos) {
-			return new Vector3(pos.x * spacing, 0.0f, pos.y * spacing);
+			return new Vector3(pos.X * spacing, 0.0f, pos.Y * spacing);
 		}
 	}
 }

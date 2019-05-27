@@ -6,10 +6,10 @@ namespace MrRob {
 
         public static List<Point> GetNeighbours(Point point, int gridWidth, int gridLength) {
             List<Point> neighbours = new List<Point>();
-            if(point.x > 0) { neighbours.Add(new Point(point.x - 1, point.y)); }
-            if(point.y > 0) { neighbours.Add(new Point(point.x, point.y - 1)); }
-            if(point.x < gridWidth - 1) { neighbours.Add(new Point(point.x + 1, point.y)); }
-            if(point.y < gridLength - 1) { neighbours.Add(new Point(point.x, point.y + 1)); }
+            if(point.X > 0) { neighbours.Add(new Point(point.X - 1, point.Y)); }
+            if(point.Y > 0) { neighbours.Add(new Point(point.X, point.Y - 1)); }
+            if(point.X < gridWidth - 1) { neighbours.Add(new Point(point.X + 1, point.Y)); }
+            if(point.Y < gridLength - 1) { neighbours.Add(new Point(point.X, point.Y + 1)); }
             return neighbours;
         }
 

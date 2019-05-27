@@ -28,16 +28,16 @@ namespace MrRob {
         public static readonly Point DOWN = DIRECTIONS[2];
         public static readonly Point LEFT = DIRECTIONS[3];
 
-        [SerializeField] private int _x;
-        [SerializeField] private int _y;
+        [SerializeField] private int x;
+        [SerializeField] private int y;
 
-        public int x { get { return _x; } set { _x = value; } }
-        public int y { get { return _y; } set { _y = value; } }
-        public int length { get { return Mathf.Abs(_x) + Mathf.Abs(_y); } }
+        public int X { get { return x; } set { x = value; } }
+        public int Y { get { return y; } set { y = value; } }
+        public int Length { get { return Mathf.Abs(x) + Mathf.Abs(y); } }
 
         public Point(int x, int y) {
-            this._x = x;
-            this._y = y;
+            this.x = x;
+            this.y = y;
         }
 
      	public Point()
@@ -45,16 +45,16 @@ namespace MrRob {
 		}
 
         public void Set(int x, int y) {
-            this._x = x;
-            this._y = y;
+            this.x = x;
+            this.y = y;
         }
 
         /// <summary>  
         /// Returns the distance to the specified point. This ignores any obstacles. 
         /// </summary>  
         public int GetDistance(Point endPoint) { 
-            int distanceX = (int)Mathf.Abs(this._x - endPoint._x);
-            int distanceY = (int)Mathf.Abs(this._y - endPoint._y);
+            int distanceX = (int)Mathf.Abs(this.x - endPoint.x);
+            int distanceY = (int)Mathf.Abs(this.y - endPoint.y);
 
             return distanceX + distanceY;
         }
@@ -70,28 +70,28 @@ namespace MrRob {
         /// Returns a point whose x and y have been swapped.
         /// </summary>  
         public Point GetInverted() {
-            return new Point(_y, _x);
+            return new Point(y, x);
         }
 
         /// <summary>  
         /// Returns a point whose x and y have been swapped and negated. 
         /// </summary>  
         public Point GetOpposite() {
-            return new Point(-_y, -_x);
+            return new Point(-y, -x);
         }
 		public static Point operator +(Point lhs, Point rhs) {
-			return new Point (lhs._x + rhs._x, lhs._y + rhs._y);
+			return new Point (lhs.x + rhs.x, lhs.y + rhs.y);
 		}
 
         public static Point operator -(Point lhs, Point rhs) {
-            return new Point(lhs._x - rhs._x, lhs._y - rhs._y);
+            return new Point(lhs.x - rhs.x, lhs.y - rhs.y);
         }
 
         public static bool operator ==(Point lhs, Point rhs) {
             if (ReferenceEquals(lhs, null) || ReferenceEquals(rhs, null)) {
                 return ReferenceEquals(lhs, rhs);
             }
-            return lhs.x == rhs.x && lhs.y == rhs.y;
+            return lhs.X == rhs.X && lhs.Y == rhs.Y;
         }
 
         public static bool operator !=(Point lhs, Point rhs) {
@@ -99,7 +99,7 @@ namespace MrRob {
         }
 
         public bool Equals(Point toCompare) {
-            return this.x == toCompare.x && this.y == toCompare.y;
+            return this.X == toCompare.X && this.Y == toCompare.Y;
         }
 
         public override bool Equals(object obj) {
@@ -110,11 +110,11 @@ namespace MrRob {
         }
 
         public override int GetHashCode() {
-            return (53 + _x.GetHashCode()) * 53 + _y.GetHashCode();
+            return (53 + x.GetHashCode()) * 53 + y.GetHashCode();
         }
 
         public override string ToString() {
-            return System.String.Format("( {0}, {1} )", _x, _y);
+            return System.String.Format("( {0}, {1} )", x, y);
         }
     }
 }

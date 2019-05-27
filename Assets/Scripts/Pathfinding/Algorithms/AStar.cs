@@ -111,7 +111,7 @@ namespace MrRob.Pathfinding.Algorithms {
         }
 
         private PathfindingNode<T> GetNode(Point point) {
-            return nodes[point.x + point.y * width];
+            return nodes[point.X + point.Y * width];
         }
     }
 }

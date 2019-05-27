@@ -70,7 +70,7 @@ namespace MrRob.Pathfinding.Algorithms {
         }
 
         private FillNode<T> GetNode(Point pos) {
-            return nodes[pos.x + pos.y * width];
+            return nodes[pos.X + pos.Y * width];
         }
     }
 }
