@@ -7,6 +7,6 @@ namespace MrRob.GameLogic {
        
         public State_Pushing(Robot robot) : base(robot) {
         }
-
+    
     }
 }

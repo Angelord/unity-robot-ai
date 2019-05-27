@@ -5,6 +5,7 @@ namespace MrRob.GameLogic {
 
         private RobotGame map;
         private Point position;
+        private Point orientation;
         private bool[] tilesRevealed;
         private bool treasureFound;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
@@ -12,18 +13,28 @@ namespace MrRob.GameLogic {
 
         public RobotGame Map { get { return map; } }
         public Point Position { get { return position; } }
+        public Point Orientation { get { return orientation; } }
         public bool TreasureFound { get { return treasureFound; } }
 
         public Robot(RobotGame map) {
             this.map = map;
             this.position = Point.ZERO;
+            this.orientation = Point.UP;
 
             tilesRevealed = new bool[map.Width * map.Length];
             SetTileRevealed(map.GoalPosition);
 
             states.Add("Searching", new State_Searching(this));
-    
+
             EnterState("Searching");
+        }
+
+        public void Move(Point direction) {
+            position += direction;
+        }
+
+        public void Look(Point direction) {
+            orientation = direction;
         }
 
         public void SetTileRevealed(Point pos) {
