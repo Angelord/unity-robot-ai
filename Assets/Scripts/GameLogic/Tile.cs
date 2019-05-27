@@ -1,6 +1,6 @@
 
 
-namespace MrRob {
+namespace MrRob.GameLogic {
     public class Tile {
 
         private Point position;

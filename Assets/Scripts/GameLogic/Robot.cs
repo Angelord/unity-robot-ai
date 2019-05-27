@@ -1,27 +1,22 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace MrRob.RobotLogic {
+namespace MrRob.GameLogic {
     public class Robot {
 
-        private Map map;
-        private GameObject instance;
+        private RobotGame map;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
         private bool treasureFound;
         private bool[] tilesRevealed;
+        private Point position;
 
-        public Map Map { get { return map; } }
+        public RobotGame Map { get { return map; } }
+        public Point Position { get { return position; } }
         public bool TreasureFound { get { return treasureFound; } }
 
-        public Robot(Map map, GameObject prefab) {
+        public Robot(RobotGame map) {
             this.map = map;
+            this.position = Point.ZERO;
             tilesRevealed = new bool[map.Width * map.Length];
-
-            instance = GameObject.Instantiate(prefab, map.MapToWorldPos(Point.ZERO), Quaternion.identity);
-
-            states.Add("Waiting", instance.AddComponent<State_Waiting>());
-
-            EnterState("Waiting");
         }
 
         public void SetTileRevealed(Point pos) {
@@ -33,11 +28,7 @@ namespace MrRob.RobotLogic {
         }
     
         public void EnterState(string stateName) {
-            foreach(var state in states) {
-                state.Value.enabled = false;
-            }
-
-            states[stateName].enabled = true;
+            throw new System.NotImplementedException();
         }
     }
 }
