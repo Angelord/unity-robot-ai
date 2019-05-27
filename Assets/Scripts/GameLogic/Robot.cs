@@ -17,10 +17,12 @@ namespace MrRob.GameLogic {
         public Robot(RobotGame map) {
             this.map = map;
             this.position = Point.ZERO;
+
             tilesRevealed = new bool[map.Width * map.Length];
+            SetTileRevealed(map.GoalPosition);
 
             states.Add("Searching", new State_Searching(this));
-
+    
             EnterState("Searching");
         }
 
