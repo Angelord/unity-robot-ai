@@ -6,7 +6,8 @@ using MrRob.GameLogic;
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
 
-		private const float STEP_DURATION = 0.05f;
+		private const float MIN_STEP_DURATION = 0.005f;
+		private const float MAX_STEP_DURATION = 5.0f;
 
 		[SerializeField] private float spacing = 1.0f;
 		[SerializeField] private GameObject tilePrefab;
@@ -19,6 +20,7 @@ namespace MrRob {
 		private TileBlock[] tileBlocks;
 		private GameObject robot;
 		private GameObject cargo;
+		private float stepDuration = 0.05f;
 
 		public static GameManager Instance { get { return instance; } }
 
@@ -41,6 +43,12 @@ namespace MrRob {
 		private void Update() {
 			if(Input.GetKeyDown(KeyCode.Space)) {
 				RunSimulation();
+			}
+			if(Input.GetButtonDown("Speed_Decr") && stepDuration > MIN_STEP_DURATION) {
+				stepDuration /= 2.0f;
+			}
+			if(Input.GetButtonDown("Speed_Incr") && stepDuration < MAX_STEP_DURATION) {
+				stepDuration *= 2.0f;
 			}
 		}
 
@@ -92,7 +100,7 @@ namespace MrRob {
 		private IEnumerator ReplaySimulation(GameResult result) {
 
 			foreach(GameResult.Frame frame in result.Frames) {
-				yield return new WaitForSeconds(STEP_DURATION);
+				yield return new WaitForSeconds(stepDuration);
 
 				robot.transform.position = GridToWorldPos(frame.RobotPos);
 				robot.transform.rotation = Quaternion.LookRotation(
