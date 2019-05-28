@@ -5,7 +5,8 @@ namespace MrRob.GameLogic {
     
         private RobotGame game;
         private List<Frame> frames = new List<Frame>();
-        //private bool success
+
+        public List<Frame> Frames { get { return frames; } }
 
         public GameResult(RobotGame game) {
             this.game = game;
@@ -13,12 +14,14 @@ namespace MrRob.GameLogic {
         
         public void LogFrame() {
             frames.Add(new Frame() {
-                RobotPos = game.RobotPosition
+                RobotPos = game.Robot.Position,
+                RobotOrientation = game.Robot.Orientation
             });
         }
 
         public class Frame {
             public Point RobotPos { get; set; }
+            public Point RobotOrientation { get; set; }
         }
     }
 }

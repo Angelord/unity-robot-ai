@@ -6,6 +6,8 @@ using MrRob.GameLogic;
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
 
+		private const float STEP_DURATION = 0.4f;
+
 		[SerializeField] private float spacing = 1.0f;
 		[SerializeField] private GameObject tilePrefab;
 		[SerializeField] private GameObject goalPrefab;
@@ -18,6 +20,12 @@ namespace MrRob {
 
 		private void Start() {
 			Initialize(10, 10);
+		}
+
+		private void Update() {
+			if(Input.GetKeyDown(KeyCode.Space)) {
+				RunSimulation();
+			}
 		}
 
 		public void Initialize(int width, int length) {
@@ -39,7 +47,21 @@ namespace MrRob {
 		public void RunSimulation() {
 			GameResult result = game.Run();
 		
-			//TODO : Visualize result
+			StopAllCoroutines();
+			StartCoroutine(ReplaySimulation(result));
+		}
+
+		private IEnumerator ReplaySimulation(GameResult result) {
+
+			foreach(GameResult.Frame frame in result.Frames) {
+				yield return new WaitForSeconds(STEP_DURATION);
+
+				robot.transform.position = MapToWorldPos(frame.RobotPos);
+				robot.transform.rotation = Quaternion.LookRotation(
+					new Vector3(frame.RobotOrientation.X, 0.0f, frame.RobotOrientation.Y), 
+					Vector3.up
+					);
+			}
 		}
 
 		public Vector3 MapToWorldPos(Point pos) {

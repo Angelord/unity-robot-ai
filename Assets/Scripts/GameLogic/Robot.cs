@@ -11,10 +11,12 @@ namespace MrRob.GameLogic {
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
         private RobotState curState = null;
         private bool done;
+        private RobotTraverser traverser;
 
         public RobotGame Map { get { return map; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
+        public RobotTraverser Traverser { get { return traverser; } }
         public bool TreasureFound { get { return treasureFound; } }
         public bool Done { get { return done; } set { done = value; } }
 
@@ -22,11 +24,15 @@ namespace MrRob.GameLogic {
             this.map = map;
             this.position = Point.ZERO;
             this.orientation = Point.UP;
+            this.traverser = new RobotTraverser(this);
 
             tilesRevealed = new bool[map.Width * map.Length];
+            SetTileRevealed(Point.ZERO);
             SetTileRevealed(map.GoalPosition);
 
             states.Add("Searching", new State_Searching(this));
+            states.Add("Pushing", new State_Pushing(this));
+            states.Add("Done", new State_Done(this));
 
             EnterState("Searching");
         }
@@ -50,6 +56,7 @@ namespace MrRob.GameLogic {
             //TODO : Check for cargo
 
             position = newPos;
+            SetTileRevealed(newPos);
             return true;
         }
 

@@ -5,6 +5,8 @@ using MrRob.GameLogic;
 namespace MrRob.GameLogic  {	
 	public class RobotGame {
 		
+		private const int MAX_STEPS = 1000;
+
 		private int width;
 		private int length;
 		private Robot robot;
@@ -14,6 +16,7 @@ namespace MrRob.GameLogic  {
 
 		public int Width { get { return width; } }
 		public int Length { get { return length; } }
+		public Robot Robot { get { return robot; } }
 		public Point RobotPosition { get { return robot.Position; } }
 		public Point GoalPosition { get { return goalPos; } }
 
@@ -35,9 +38,12 @@ namespace MrRob.GameLogic  {
 		public GameResult Run() {
 			GameResult result = new GameResult(this);
 
-			//do
-			//	robot.step();
-			//	goal.step();
+			int curStep = 0;
+			do {
+				robot.Step();
+				result.LogFrame();
+				curStep++;
+			} while(!robot.Done && curStep < MAX_STEPS);
 
 			return result;
 		}
