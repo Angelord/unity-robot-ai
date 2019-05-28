@@ -16,7 +16,7 @@ namespace MrRob {
 
 		private static GameManager instance;
 		private RobotGame game; 
-		private GameObject[] tileBlocks;
+		private TileBlock[] tileBlocks;
 		private GameObject robot;
 		private GameObject cargo;
 
@@ -48,14 +48,17 @@ namespace MrRob {
 
 			game = new RobotGame(width, length);
 
-			tileBlocks = new GameObject[width * length];
+			tileBlocks = new TileBlock[width * length];
 			for(int y = 0; y < length; y++) {
 				for(int x = 0; x < width; x++) {
 					Point gridPos = new Point(x, y);
 
 					Vector3 pos = GridToWorldPos(gridPos);
-					tileBlocks[x + y * width] = Instantiate(tilePrefab, pos, Quaternion.identity, this.transform);
-					tileBlocks[x + y * width].GetComponent<TileBlock>().Position = gridPos;
+					GameObject newBlock = Instantiate(tilePrefab, pos, Quaternion.identity, this.transform);
+					TileBlock blockComp = newBlock.GetComponent<TileBlock>();
+					blockComp.Position = gridPos;
+					blockComp.SetRevealed(true);
+					tileBlocks[x + y * width] = blockComp;
 				}
 			}
 			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
@@ -76,6 +79,10 @@ namespace MrRob {
 		}
 
 		public void RunSimulation() {
+			foreach(TileBlock block in tileBlocks) {
+				block.SetRevealed(false);
+			}
+
 			GameResult result = game.Run();
 		
 			StopAllCoroutines();
@@ -92,6 +99,10 @@ namespace MrRob {
 					new Vector3(frame.RobotOrientation.X, 0.0f, frame.RobotOrientation.Y), 
 					Vector3.up
 					);
+
+				foreach(Point reveal in frame.RevealedPositions) {
+					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
+				}
 			}
 		}
 

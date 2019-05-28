@@ -8,8 +8,11 @@ namespace MrRob {
 
 		public Point Position { get; set; }
 
-        public void OnPointerClick(PointerEventData eventData) {
-			
+		public void SetRevealed(bool value) {
+			transform.GetChild(0).gameObject.SetActive(!value);
+		}
+
+		public void OnPointerClick(PointerEventData eventData) {
 			if(eventData.button == PointerEventData.InputButton.Left) {
 				GameManager.Instance.OnTileClick(Position);
 			}
@@ -17,5 +20,5 @@ namespace MrRob {
 				GameManager.Instance.OnTileRightClick(Position);
 			}
 		}
-    }
+	}
 }
