@@ -14,14 +14,14 @@ namespace MrRob.GameLogic {
         private RobotState prevState = null;
         private RobotState curState = null;
         private IPathfindingAlgorithm<Tile> pathfinding;
-        private RobotTraverser traverser;
+        private Traverser_Robot traverser;
         private bool done;
 
         public RobotGame Map { get { return game; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
         public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }
-        public RobotTraverser Traverser { get { return traverser; } }
+        public Traverser_Robot Traverser { get { return traverser; } }
         public bool CargoFound { get { return cargoFound; } }
         public bool Done { get { return done; } set { done = value; } }
 
@@ -30,7 +30,7 @@ namespace MrRob.GameLogic {
             this.position = Point.ZERO;
             this.orientation = Point.UP;
             this.pathfinding = new AStar<Tile>(game.Tiles, game.Width);
-            this.traverser = new RobotTraverser(this);
+            this.traverser = new Traverser_Robot(this);
 
             tilesRevealed = new bool[game.Width * game.Length];
 
@@ -75,6 +75,11 @@ namespace MrRob.GameLogic {
             position = newPos;
             SetTileRevealed(newPos);
             return true;
+        }
+
+        public bool CanTraverse(Point pos) { //Determines if the robot can step on a tile based on current information
+            return  game.Contains(pos) &&
+                    (!TileIsRevealed(pos) || !game.GetTile(pos).Blocked); 
         }
 
         public void EnterState(string stateName) {

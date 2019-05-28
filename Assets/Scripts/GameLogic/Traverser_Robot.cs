@@ -2,11 +2,11 @@ using MrRob.Pathfinding;
 
 namespace MrRob.GameLogic {
 
-    public class RobotTraverser : ITraverser<Tile> {
+    public class Traverser_Robot : ITraverser<Tile> {
 
         private Robot robot;
 
-        public RobotTraverser(Robot robot) {
+        public Traverser_Robot(Robot robot) {
             this.robot = robot;
         }
 
@@ -19,7 +19,11 @@ namespace MrRob.GameLogic {
         }
 
         public bool CanTraverse(Tile node) {
-            return (!robot.TileIsRevealed(node.Position) || !node.Blocked);
+            return robot.CanTraverse(node.Position);
+        }
+
+        public bool CanMoveBetween(Tile start, Tile end) {
+            return true;
         }
 
         public int GetTraverseCost(Tile start, Tile end) {

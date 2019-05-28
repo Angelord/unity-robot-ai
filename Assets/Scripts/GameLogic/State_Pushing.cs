@@ -8,5 +8,8 @@ namespace MrRob.GameLogic {
         public State_Pushing(Robot robot) : base(robot) {
         }
     
+        public override void OnEnter() {
+            
+        }
     }
 }
