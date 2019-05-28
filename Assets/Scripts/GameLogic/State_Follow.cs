@@ -16,6 +16,13 @@ namespace MrRob.GameLogic {
 
             Point nextTile = path[progress];
             Point dir = nextTile - Robot.Position;
+            if(dir.Length > 1) {
+                throw new System.InvalidOperationException(
+                    string.Format(@"Invalid path provided to Follow! 
+                    Distance between tiles is greater than 1.
+                    Distance is {0} at node {1}, {2}!", dir.Length, progress, path));
+            }
+
             if(Robot.Orientation != dir) {
                 Robot.Look(dir);
                 return;
