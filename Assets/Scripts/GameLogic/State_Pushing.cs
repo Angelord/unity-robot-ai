@@ -30,6 +30,7 @@ namespace MrRob.GameLogic {
                 for(int i = 1; i < cargoPath.Length; i++) {
                     Point dir = cargoPath[i] - cargoPath[i - 1];
                     botPath.Add(cargoPath[i - 1] - dir);
+                    botPath.Add(cargoPath[i - 1]);
                 }
 
                 Path finalPath = new Path();
