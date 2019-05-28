@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MrRob.Pathfinding;
 
 namespace MrRob.GameLogic {
 	public class State_Searching : RobotState {
+
+		private List<Point> passedTiles = new List<Point>();
 
 		public State_Searching(Robot robot) : base(robot) {
 		}
@@ -19,9 +22,16 @@ namespace MrRob.GameLogic {
 
 			List<Point> neighbouringPnts = GridUtility.GetNeighbours(Robot.Position, Robot.Map.Width, Robot.Map.Length);
 
+			foreach(var neighbour in neighbouringPnts) {
+				if(!Robot.TileIsRevealed(neighbour) && !passedTiles.Contains(neighbour)) {
+					passedTiles.Add(neighbour);
+				}
+			}
+
 			Point fwdPos = Robot.Position + Robot.Orientation;
 			if(neighbouringPnts.Contains(fwdPos) && !Robot.TileIsRevealed(fwdPos)) {	//Try to move forward
 				Robot.TryMove(fwdPos);
+				passedTiles.Remove(fwdPos);
 				return;
 			}
 
@@ -33,10 +43,33 @@ namespace MrRob.GameLogic {
 				}
 			}
 
-			UnityEngine.Debug.Log("No more direct neighbours to move to");
-			Robot.EnterState("Done");
+			Point nearest = FindNearestUnrevealed();
+			if(nearest == Point.MINUS) {
+				Done("Finished exploring map");
+				return;
+			}
+
+			Path pathToNearest = Robot.Pathfinding.GetPath(Robot.Position, nearest, Robot.Traverser);
+			if(!pathToNearest.Exists || pathToNearest.Length == 1) {
+				Done("Finished exploring map");
+				return;
+			}
+
+			passedTiles.Remove(nearest);
+			Robot.EnterState(new State_Follow(Robot, pathToNearest));	//Move to the last tile we passed
 		}
 
-		//Find nearest unrevealed
+		private void Done(string message) {
+			UnityEngine.Debug.Log(message);
+			Robot.EnterState("Done");
+		} 
+
+		private Point FindNearestUnrevealed() {
+			if(passedTiles.Count == 0) {
+				return Point.MINUS;
+			}
+
+			return passedTiles[passedTiles.Count - 1];
+		}
 	}
 }

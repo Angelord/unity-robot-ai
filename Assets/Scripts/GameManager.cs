@@ -6,7 +6,7 @@ using MrRob.GameLogic;
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
 
-		private const float STEP_DURATION = 0.4f;
+		private const float STEP_DURATION = 0.05f;
 
 		[SerializeField] private float spacing = 1.0f;
 		[SerializeField] private GameObject tilePrefab;

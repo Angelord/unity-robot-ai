@@ -19,6 +19,7 @@ namespace MrRob.GameLogic  {
 		public Robot Robot { get { return robot; } }
 		public Cargo Cargo { get { return cargo; } }
 		public Point GoalPosition { get { return goalPos; } }
+		public Tile[] Tiles { get { return tiles; } }
 
 		public RobotGame(int width, int length) {
 			this.width = width;

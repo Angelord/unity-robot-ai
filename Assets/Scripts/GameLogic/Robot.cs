@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MrRob.Pathfinding;
+using MrRob.Pathfinding.Algorithms;
 
 namespace MrRob.GameLogic {
     public class Robot {
@@ -9,26 +11,30 @@ namespace MrRob.GameLogic {
         private bool[] tilesRevealed;
         private bool treasureFound;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
+        private RobotState prevState = null;
         private RobotState curState = null;
-        private bool done;
+        private IPathfindingAlgorithm<Tile> pathfinding;
         private RobotTraverser traverser;
+        private bool done;
 
         public RobotGame Map { get { return map; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
+        public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }
         public RobotTraverser Traverser { get { return traverser; } }
         public bool TreasureFound { get { return treasureFound; } }
         public bool Done { get { return done; } set { done = value; } }
 
-        public Robot(RobotGame map) {
-            this.map = map;
+        public Robot(RobotGame game) {
+            this.map = game;
             this.position = Point.ZERO;
             this.orientation = Point.UP;
+            this.pathfinding = new AStar<Tile>(game.Tiles, game.Width);
             this.traverser = new RobotTraverser(this);
 
-            tilesRevealed = new bool[map.Width * map.Length];
+            tilesRevealed = new bool[game.Width * game.Length];
             SetTileRevealed(Point.ZERO);
-            SetTileRevealed(map.GoalPosition);
+            SetTileRevealed(game.GoalPosition);
 
             states.Add("Searching", new State_Searching(this));
             states.Add("Pushing", new State_Pushing(this));
@@ -71,19 +77,28 @@ namespace MrRob.GameLogic {
         public bool TileIsRevealed(Point pos) {
             return tilesRevealed[pos.X + pos.Y * map.Width];
         }
-    
+
         public void EnterState(string stateName) {
 
             if(!states.ContainsKey(stateName)) {
                 throw new System.ArgumentException(string.Format("No state with name {} exists for the robot!", stateName));
             }
 
-            if(curState == states[stateName]) { return; }
+            EnterState(states[stateName]);
+        }
+
+        public void EnterState(RobotState state) {
+            if(curState == state) { return; }
 
             if(curState != null) { curState.OnExit(); }
 
-            curState = states[stateName];
+            prevState = curState;
+            curState = state;
             curState.OnEnter();
+        }
+
+        public void ReturnToPrevState() {
+            EnterState(prevState);
         }
     }
 }
