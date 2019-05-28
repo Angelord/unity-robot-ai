@@ -5,11 +5,11 @@ using MrRob.Pathfinding.Algorithms;
 namespace MrRob.GameLogic {
     public class Robot {
 
-        private RobotGame map;
+        private RobotGame game;
         private Point position;
         private Point orientation;
         private bool[] tilesRevealed;
-        private bool treasureFound;
+        private bool cargoFound;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
         private RobotState prevState = null;
         private RobotState curState = null;
@@ -17,28 +17,31 @@ namespace MrRob.GameLogic {
         private RobotTraverser traverser;
         private bool done;
 
-        public RobotGame Map { get { return map; } }
+        public RobotGame Map { get { return game; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
         public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }
         public RobotTraverser Traverser { get { return traverser; } }
-        public bool TreasureFound { get { return treasureFound; } }
+        public bool CargoFound { get { return cargoFound; } }
         public bool Done { get { return done; } set { done = value; } }
 
         public Robot(RobotGame game) {
-            this.map = game;
+            this.game = game;
             this.position = Point.ZERO;
             this.orientation = Point.UP;
             this.pathfinding = new AStar<Tile>(game.Tiles, game.Width);
             this.traverser = new RobotTraverser(this);
 
             tilesRevealed = new bool[game.Width * game.Length];
-            SetTileRevealed(Point.ZERO);
-            SetTileRevealed(game.GoalPosition);
 
             states.Add("Searching", new State_Searching(this));
             states.Add("Pushing", new State_Pushing(this));
             states.Add("Done", new State_Done(this));
+        }
+
+        public void Init() {
+            SetTileRevealed(Point.ZERO);
+            SetTileRevealed(game.GoalPosition);
 
             EnterState("Searching");
         }
@@ -48,34 +51,30 @@ namespace MrRob.GameLogic {
                 curState.Step();
             }
         }
+ 
+        public void Look(Point direction) {
+            orientation = direction;
+        }
+        
+        public bool TryMove() {
+            Point newPos = position + orientation;
 
-        public bool TryMove(Point newPos) {
-            if(!map.Contains(newPos)) {
+            if(!game.Contains(newPos)) {
                 throw new System.ArgumentException(string.Format("Move position {0} is outside map bounds!", newPos));
             }
 
-            if(map.GetTile(newPos).Blocked) {
+            if(game.GetTile(newPos).Blocked) {
                 SetTileRevealed(newPos);
                 return false;
             }
 
-            //TODO : Check for cargo
+            if(newPos == game.Cargo.Position) {
+                return TryPushCargo();
+            }
 
             position = newPos;
             SetTileRevealed(newPos);
             return true;
-        }
-
-        public void Look(Point direction) {
-            orientation = direction;
-        }
-
-        public void SetTileRevealed(Point pos) {
-            tilesRevealed[pos.X + pos.Y * map.Width] = true;
-        } 
-
-        public bool TileIsRevealed(Point pos) {
-            return tilesRevealed[pos.X + pos.Y * map.Width];
         }
 
         public void EnterState(string stateName) {
@@ -99,6 +98,37 @@ namespace MrRob.GameLogic {
 
         public void ReturnToPrevState() {
             EnterState(prevState);
+        }
+
+        public bool TileIsRevealed(Point pos) {
+            return tilesRevealed[pos.X + pos.Y * game.Width];
+        }
+
+        private void SetTileRevealed(Point pos) {
+            tilesRevealed[pos.X + pos.Y * game.Width] = true;
+            if(pos == game.Cargo.Position) {
+                cargoFound = true;
+            }
+        } 
+
+        private bool TryPushCargo() {
+            Point newPos = position + orientation;
+
+            SetTileRevealed(newPos);
+
+            Point newCargoPos = game.Cargo.Position + orientation;
+            if(game.Contains(newCargoPos)) {
+                SetTileRevealed(newCargoPos);
+            }
+
+            if(game.Cargo.CanPush(orientation)) {
+                game.Cargo.Push(orientation);
+                position = newPos;
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 }

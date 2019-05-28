@@ -20,7 +20,6 @@ namespace MrRob.GameLogic {
             if(!CanPush(direction)) {
                 throw new System.InvalidOperationException(string.Format("Invalid push direction for cargo {0}", direction));
             }
-
             Position = Position + direction;
         }
     }

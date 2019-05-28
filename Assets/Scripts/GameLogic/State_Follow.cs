@@ -21,7 +21,7 @@ namespace MrRob.GameLogic {
                 return;
             }
 
-            if(!Robot.TryMove(nextTile)) {
+            if(!Robot.TryMove()) {
                 Robot.ReturnToPrevState();
                 return;
             }

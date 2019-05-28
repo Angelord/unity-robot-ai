@@ -16,8 +16,9 @@ namespace MrRob.GameLogic {
 
 		public override void Step() {
 
-			if(Robot.TreasureFound) {
+			if(Robot.CargoFound) {
 				Robot.EnterState("Pushing");
+				return;
 			}
 
 			List<Point> neighbouringPnts = GridUtility.GetNeighbours(Robot.Position, Robot.Map.Width, Robot.Map.Length);
@@ -30,7 +31,7 @@ namespace MrRob.GameLogic {
 
 			Point fwdPos = Robot.Position + Robot.Orientation;
 			if(neighbouringPnts.Contains(fwdPos) && !Robot.TileIsRevealed(fwdPos)) {	//Try to move forward
-				Robot.TryMove(fwdPos);
+				Robot.TryMove();
 				passedTiles.Remove(fwdPos);
 				return;
 			}

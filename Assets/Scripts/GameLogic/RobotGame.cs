@@ -40,6 +40,8 @@ namespace MrRob.GameLogic  {
 		public GameResult Run() {
 			GameResult result = new GameResult(this);
 
+			robot.Init();
+
 			int curStep = 0;
 			do {
 				robot.Step();
