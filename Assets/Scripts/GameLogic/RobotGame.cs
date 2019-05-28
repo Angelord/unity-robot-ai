@@ -33,7 +33,7 @@ namespace MrRob.GameLogic  {
 			}
 
 			robot = new Robot(this);
-			cargo = new Cargo() { Position = new Point(width / 2, length / 2) };
+			cargo = new Cargo(this) { Position = new Point(width / 2, length / 2) };
 		}
 
 		public GameResult Run() {
