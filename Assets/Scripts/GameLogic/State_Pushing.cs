@@ -7,10 +7,10 @@ namespace MrRob.GameLogic {
     //While in this state, the robot tries to push the cargo to the goal.
     public class State_Pushing : RobotState {
        
-        private Traverser_Cargo traverser;
+        private Traverser_Cargo cargoTrav;
 
         public State_Pushing(Robot robot) : base(robot) {
-            this.traverser = new Traverser_Cargo(Robot);
+            this.cargoTrav = new Traverser_Cargo(Robot);
         }
     
         public override void OnEnter() {
@@ -22,7 +22,7 @@ namespace MrRob.GameLogic {
                 return;
             }
 
-            Path cargoPath = Robot.Pathfinding.GetPath(cargoPos, goalPos, traverser);
+            Path cargoPath = Robot.Pathfinding.GetPath(cargoPos, goalPos, cargoTrav);
             UnityEngine.Debug.Log("Cargo Path " + cargoPath);
             if(cargoPath.Exists) {
 
@@ -37,11 +37,14 @@ namespace MrRob.GameLogic {
                 finalPath.Append(botPath[0]);
                 for(int i  = 0; i < botPath.Count - 1; i++) {
                     if(botPath[i].GetDistance(botPath[i + 1]) != 1) {
+                        Robot.Traverser.FixedBlocks.Add(cargoPath[(i + 1) / 2]);
                         finalPath.Append(Robot.Pathfinding.GetPath(botPath[i], botPath[i + 1], Robot.Traverser));
                     }
                     else {
                         finalPath.Append(botPath[i + 1]);
                     }
+
+                    Robot.Traverser.FixedBlocks.Clear();
                 }
 
                 UnityEngine.Debug.Log("Final path " + finalPath);

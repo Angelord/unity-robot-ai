@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MrRob.Pathfinding;
 
 namespace MrRob.GameLogic {
@@ -5,6 +6,9 @@ namespace MrRob.GameLogic {
     public class Traverser_Robot : ITraverser<Tile> {
 
         private Robot robot;
+        private List<Point> fixedBlocks = new List<Point>();
+
+        public List<Point> FixedBlocks { get { return fixedBlocks; } set { fixedBlocks = value; } }
 
         public Traverser_Robot(Robot robot) {
             this.robot = robot;
@@ -19,6 +23,7 @@ namespace MrRob.GameLogic {
         }
 
         public bool CanTraverse(Tile node) {
+            if(fixedBlocks.Contains(node.Position)) { return false; }
             return robot.CanTraverse(node.Position);
         }
 
