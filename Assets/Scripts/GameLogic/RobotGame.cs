@@ -4,20 +4,20 @@ using MrRob.GameLogic;
 
 namespace MrRob.GameLogic  {	
 	public class RobotGame {
-		
+
 		private const int MAX_STEPS = 1000;
 
 		private int width;
 		private int length;
 		private Robot robot;
+		private Cargo cargo;
 		private Point goalPos;
 		private Tile[] tiles;
-		//Treasure 
 
 		public int Width { get { return width; } }
 		public int Length { get { return length; } }
 		public Robot Robot { get { return robot; } }
-		public Point RobotPosition { get { return robot.Position; } }
+		public Cargo Cargo { get { return cargo; } }
 		public Point GoalPosition { get { return goalPos; } }
 
 		public RobotGame(int width, int length) {
@@ -33,6 +33,7 @@ namespace MrRob.GameLogic  {
 			}
 
 			robot = new Robot(this);
+			cargo = new Cargo() { Position = new Point(width / 2, length / 2) };
 		}
 
 		public GameResult Run() {
@@ -46,6 +47,18 @@ namespace MrRob.GameLogic  {
 			} while(!robot.Done && curStep < MAX_STEPS);
 
 			return result;
+		}
+
+		public void ToggleBlocking(Point pos) {
+			if(pos != cargo.Position) {
+				Tile tile = GetTile(pos);
+				tile.Blocked = !tile.Blocked;
+			}
+		}
+
+		public void SetCargoPos(Point pos) {
+			cargo.Position = pos;
+			GetTile(pos).Blocked = false;
 		}
 
 		public bool Contains(Point pos) {

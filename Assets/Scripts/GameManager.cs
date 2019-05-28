@@ -15,6 +15,7 @@ namespace MrRob {
 		[SerializeField] private GameObject cargoPrefab;
 
 		private RobotGame game; 
+		private GameObject[] tileBlocks;
 		private GameObject robot;
 		private GameObject cargo;
 
@@ -32,17 +33,27 @@ namespace MrRob {
 
 			game = new RobotGame(width, length);
 
+			tileBlocks = new GameObject[width * length];
 			for(int y = 0; y < length; y++) {
 				for(int x = 0; x < width; x++) {
-					Vector3 pos = MapToWorldPos(new Point(x, y));
-					GameObject newBlock = Instantiate(tilePrefab, pos, Quaternion.identity, this.transform);
+					Vector3 pos = GridToWorldPos(new Point(x, y));
+					tileBlocks[x + y * width] = Instantiate(tilePrefab, pos, Quaternion.identity, this.transform);
 				}
 			}
-			Instantiate(goalPrefab, MapToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
-			robot = Instantiate(robotPrefab, MapToWorldPos(game.RobotPosition), Quaternion.identity, this.transform);
+			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
+			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform);
+			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform);
 		}
 
-		//TODO : Use block clicks to update game state
+		public void OnTileClick(Point pos) {
+			game.ToggleBlocking(pos);
+			tileBlocks[pos.X + pos.Y * game.Length].SetActive(game.GetTile(pos).Blocked);
+		}
+
+		public void OnTileRightClick(Point pos) {
+			game.SetCargoPos(pos);
+			cargo.transform.position = GridToWorldPos(pos);
+		}
 
 		public void RunSimulation() {
 			GameResult result = game.Run();
@@ -56,7 +67,7 @@ namespace MrRob {
 			foreach(GameResult.Frame frame in result.Frames) {
 				yield return new WaitForSeconds(STEP_DURATION);
 
-				robot.transform.position = MapToWorldPos(frame.RobotPos);
+				robot.transform.position = GridToWorldPos(frame.RobotPos);
 				robot.transform.rotation = Quaternion.LookRotation(
 					new Vector3(frame.RobotOrientation.X, 0.0f, frame.RobotOrientation.Y), 
 					Vector3.up
@@ -64,7 +75,7 @@ namespace MrRob {
 			}
 		}
 
-		public Vector3 MapToWorldPos(Point pos) {
+		public Vector3 GridToWorldPos(Point pos) {
 			return new Vector3(pos.X * spacing, 0.0f, pos.Y * spacing);
 		}
 	}

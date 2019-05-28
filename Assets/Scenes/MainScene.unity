@@ -446,7 +446,8 @@ MonoBehaviour:
   goalPrefab: {fileID: 1251403713855442, guid: f6dfc4ddf396b41f0937b517d2faa5f7, type: 2}
   robotPrefab: {fileID: 1601611677553888, guid: 1b7c65aec7924451fba0e3c15bc48113,
     type: 2}
-  cargoPrefab: {fileID: 0}
+  cargoPrefab: {fileID: 1705574192736546, guid: 1c9bbfcd431954147b4e18f6077f1df8,
+    type: 2}
 --- !u!4 &1982860808
 Transform:
   m_ObjectHideFlags: 0
