@@ -14,13 +14,28 @@ namespace MrRob {
 		[SerializeField] private GameObject robotPrefab;
 		[SerializeField] private GameObject cargoPrefab;
 
+		private static GameManager instance;
 		private RobotGame game; 
 		private GameObject[] tileBlocks;
 		private GameObject robot;
 		private GameObject cargo;
 
+		public static GameManager Instance { get { return instance; } }
+
 		private void Start() {
+			if(instance == null) {
+				instance = this;
+			}
+			else {
+				Destroy(this);
+				return;
+			}
+
 			Initialize(10, 10);
+		}
+
+		private void OnDestroy() {
+			Destroy(this);
 		}
 
 		private void Update() {
@@ -36,8 +51,11 @@ namespace MrRob {
 			tileBlocks = new GameObject[width * length];
 			for(int y = 0; y < length; y++) {
 				for(int x = 0; x < width; x++) {
-					Vector3 pos = GridToWorldPos(new Point(x, y));
+					Point gridPos = new Point(x, y);
+
+					Vector3 pos = GridToWorldPos(gridPos);
 					tileBlocks[x + y * width] = Instantiate(tilePrefab, pos, Quaternion.identity, this.transform);
+					tileBlocks[x + y * width].GetComponent<TileBlock>().Position = gridPos;
 				}
 			}
 			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
@@ -47,12 +65,14 @@ namespace MrRob {
 
 		public void OnTileClick(Point pos) {
 			game.ToggleBlocking(pos);
-			tileBlocks[pos.X + pos.Y * game.Length].SetActive(game.GetTile(pos).Blocked);
+			MeshRenderer blockRenderer = tileBlocks[pos.X + pos.Y * game.Width].GetComponent<MeshRenderer>();
+			blockRenderer.enabled = !game.GetTile(pos).Blocked;
 		}
 
 		public void OnTileRightClick(Point pos) {
-			game.SetCargoPos(pos);
-			cargo.transform.position = GridToWorldPos(pos);
+			if(game.TrySetCargoPos(pos)) {
+				cargo.transform.position = GridToWorldPos(pos);
+			}
 		}
 
 		public void RunSimulation() {

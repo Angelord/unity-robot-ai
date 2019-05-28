@@ -56,9 +56,12 @@ namespace MrRob.GameLogic  {
 			}
 		}
 
-		public void SetCargoPos(Point pos) {
+		public bool TrySetCargoPos(Point pos) {
+			if(GetTile(pos).Blocked) {
+				return false;
+			}
 			cargo.Position = pos;
-			GetTile(pos).Blocked = false;
+			return true;
 		}
 
 		public bool Contains(Point pos) {

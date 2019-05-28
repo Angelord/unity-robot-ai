@@ -7,7 +7,7 @@ namespace MrRob.GameLogic {
         private bool blocked;
 
         public Point Position { get { return position; } }
-        public bool Blocked { get { return blocked; } set { blocked = false; } }
+        public bool Blocked { get { return blocked; } set { blocked = value; } }
 
         public Tile(Point position) {
             this.position = position;
