@@ -21,5 +21,10 @@ namespace MrRob.GameLogic {
 
 		public virtual void Step() {
 		}
+
+		protected void Done(string message) {
+			UnityEngine.Debug.Log(message);
+			Robot.EnterState("Done");
+		} 
 	}
 }

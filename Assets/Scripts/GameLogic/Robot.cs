@@ -17,7 +17,7 @@ namespace MrRob.GameLogic {
         private Traverser_Robot traverser;
         private bool done;
 
-        public RobotGame Map { get { return game; } }
+        public RobotGame Game { get { return game; } }
         public Point Position { get { return position; } }
         public Point Orientation { get { return orientation; } }
         public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }

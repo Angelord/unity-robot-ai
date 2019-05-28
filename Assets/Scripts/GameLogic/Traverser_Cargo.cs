@@ -26,12 +26,11 @@ namespace MrRob.GameLogic {
         }
 
         public bool CanTraverse(Tile node) {
-            throw new System.NotImplementedException();
+            return robot.CanTraverse(node.Position);
         }
 
-        public int GetTraverseCost(Tile start, Tile end)
-        {
-            throw new System.NotImplementedException();
+        public int GetTraverseCost(Tile start, Tile end) {
+            return 1;
         }
     }
 }

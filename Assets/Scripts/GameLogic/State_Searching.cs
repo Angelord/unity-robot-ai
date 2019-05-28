@@ -21,7 +21,7 @@ namespace MrRob.GameLogic {
 				return;
 			}
 
-			List<Point> neighbouringPnts = GridUtility.GetNeighbours(Robot.Position, Robot.Map.Width, Robot.Map.Length);
+			List<Point> neighbouringPnts = GridUtility.GetNeighbours(Robot.Position, Robot.Game.Width, Robot.Game.Length);
 
 			foreach(var neighbour in neighbouringPnts) {
 				if(!Robot.TileIsRevealed(neighbour) && !passedTiles.Contains(neighbour)) {
@@ -59,11 +59,6 @@ namespace MrRob.GameLogic {
 			passedTiles.Remove(nearest);
 			Robot.EnterState(new State_Follow(Robot, pathToNearest));	//Move to the last tile we passed
 		}
-
-		private void Done(string message) {
-			UnityEngine.Debug.Log(message);
-			Robot.EnterState("Done");
-		} 
 
 		private Point FindNearestUnrevealed() {
 			if(passedTiles.Count == 0) {

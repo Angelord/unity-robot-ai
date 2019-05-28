@@ -25,6 +25,26 @@ namespace MrRob.Pathfinding {
         public IEnumerator<Point> GetEnumerator() { return pathNodes.GetEnumerator(); }
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
 
+
+        public void Prepend(Path other) {
+            if(other.End != Start) {
+                throw new ArgumentException("To prepend a path its end node must match the target's start node.");
+            }
+
+            for(int i = 0; i < other.Length - 1; i++) {
+                pathNodes.Insert(0, other[i]);
+            }
+        }
+
+        public void Append(Path other) {
+            if(other.Start != End) {
+                throw new ArgumentException("To append a path its start node must match the target's end node.");
+            }
+
+            for(int i = 1; i < other.Length; i++) {
+                pathNodes.Add(other[i]);
+            }
+        }
     }
 
 }
