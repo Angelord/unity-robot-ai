@@ -99,6 +99,7 @@ namespace MrRob {
 					new Vector3(frame.RobotOrientation.X, 0.0f, frame.RobotOrientation.Y), 
 					Vector3.up
 					);
+				cargo.transform.position = GridToWorldPos(frame.CargoPos);
 
 				foreach(Point reveal in frame.RevealedPositions) {
 					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);

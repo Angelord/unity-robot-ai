@@ -17,7 +17,8 @@ namespace MrRob.GameLogic {
         public void LogFrame() {
             Frame newFrame = new Frame() {
                 RobotPos = game.Robot.Position,
-                RobotOrientation = game.Robot.Orientation
+                RobotOrientation = game.Robot.Orientation,
+                CargoPos = game.Cargo.Position
             };
 
             bool isRevealed = false;
@@ -39,6 +40,7 @@ namespace MrRob.GameLogic {
 
             public Point RobotPos { get; set; }
             public Point RobotOrientation { get; set; }
+            public Point CargoPos { get; set; }
             public List<Point> RevealedPositions { get { return revealedPositions; } }
 
             public void AddReveal(Point pos) {
