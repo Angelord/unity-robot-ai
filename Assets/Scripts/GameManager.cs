@@ -14,7 +14,8 @@ namespace MrRob {
 		[SerializeField] private GameObject goalPrefab;
 		[SerializeField] private GameObject robotPrefab;
 		[SerializeField] private GameObject cargoPrefab;
-
+		[SerializeField] private Vector2 minMaxCameraSz = new Vector2(6.0f, 12.5f);
+		
 		private static GameManager instance;
 		private RobotGame game; 
 		private TileBlock[] tileBlocks;
@@ -51,6 +52,15 @@ namespace MrRob {
 		}
 
 		public void Initialize(int width, int length) {
+
+			Camera cam = Camera.main;
+			if (cam != null) {
+				//Set camera size to account for grid sie
+				cam.orthographicSize = minMaxCameraSz.x +
+				                       (float) (Mathf.Max(width, length) - RobotGame.MIN_DIMENSION) /
+				                       (RobotGame.MAX_DIMENSION - RobotGame.MIN_DIMENSION) *
+				                       (minMaxCameraSz.y - minMaxCameraSz.x);
+			}
 
 			game = new RobotGame(width, length);
 
@@ -138,7 +148,7 @@ namespace MrRob {
 		}
 
 		public Vector3 GridToWorldPos(Point pos) {
-			return new Vector3(pos.X * spacing, 0.0f, pos.Y * spacing);
+			return new Vector3((pos.X - game.Width / 2) * spacing, 0.0f, (pos.Y - game.Length / 2) * spacing);
 		}
 	}
 }

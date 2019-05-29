@@ -12,7 +12,7 @@ namespace MrRob.GUI {
         [SerializeField] private Text widthLabel;
         [SerializeField] private Text lengthLabel;
         [SerializeField] private GameManager manager;
-
+        
         private int WidthVal {
             get { return Mathf.RoundToInt(widthSlider.value); }
         }

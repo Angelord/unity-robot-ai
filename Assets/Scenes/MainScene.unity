@@ -949,7 +949,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.5
+  orthographic size: 12.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -971,13 +971,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1305792122}
-  m_LocalRotation: {x: 0.31598538, y: 0.3596048, z: -0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: -3, y: 9.6, z: -3}
+  m_LocalRotation: {x: 0.39044833, y: 0.34682897, z: -0.161729, w: 0.8373192}
+  m_LocalPosition: {x: -5.6, y: 9.3, z: -5.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 40, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 45.000004, z: 0}
 --- !u!114 &1305792127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,6 +1257,7 @@ MonoBehaviour:
     type: 2}
   cargoPrefab: {fileID: 1705574192736546, guid: 1c9bbfcd431954147b4e18f6077f1df8,
     type: 2}
+  minMaxCameraSz: {x: 6, y: 12.5}
 --- !u!4 &1982860808
 Transform:
   m_ObjectHideFlags: 0
