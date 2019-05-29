@@ -113,6 +113,7 @@ namespace MrRob {
 				block.SetRevealed(true);
 			}
 			robot.transform.position = GridToWorldPos(game.Robot.Position);
+			robot.transform.rotation = DirToLookRotation(game.Robot.Orientation);
 			cargo.transform.position = GridToWorldPos(game.Cargo.Position);
 		}
 
@@ -122,16 +123,20 @@ namespace MrRob {
 				yield return new WaitForSeconds(stepDuration);
 
 				robot.transform.position = GridToWorldPos(frame.RobotPos);
-				robot.transform.rotation = Quaternion.LookRotation(
-					new Vector3(frame.RobotOrientation.X, 0.0f, frame.RobotOrientation.Y), 
-					Vector3.up
-					);
+				robot.transform.rotation = DirToLookRotation(frame.RobotOrientation);
 				cargo.transform.position = GridToWorldPos(frame.CargoPos);
 
 				foreach(Point reveal in frame.RevealedPositions) {
 					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
 				}
 			}
+		}
+
+		public Quaternion DirToLookRotation(Point direction) {
+			return Quaternion.LookRotation(
+					new Vector3(direction.X, 0.0f, direction.Y), 
+					Vector3.up
+					);
 		}
 
 		public Vector3 GridToWorldPos(Point pos) {
