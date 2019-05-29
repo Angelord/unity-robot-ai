@@ -5,7 +5,7 @@ using MrRob.GameLogic;
 namespace MrRob.GameLogic  {	
 	public class RobotGame {
 
-		private const int MAX_STEPS = 1000;
+		private const int MAX_STEPS = 500;
 
 		private int width;
 		private int length;
