@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using MrRob.GameLogic;
 
 namespace MrRob.GameLogic  {	
-	public class RobotGame {
+	public class RobotGame
+	{
 
+		public const int MIN_DIMENSION = 5;
+		public const int MAX_DIMENSION = 20;
 		private const int MAX_STEPS = 500;
 
 		private int width;

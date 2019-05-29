@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_MrRoboto.1753842567.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets/Scripts" t="Include">
+        <e p="GameLogic" t="Include">
+          <e p="Cargo.cs" t="Include" />
+          <e p="GameResult.cs" t="Include" />
+          <e p="Robot.cs" t="Include" />
+          <e p="RobotGame.cs" t="Include" />
+          <e p="RobotState.cs" t="Include" />
+          <e p="State_Follow.cs" t="Include" />
+          <e p="State_Idle.cs" t="Include" />
+          <e p="State_Pushing.cs" t="Include" />
+          <e p="State_Searching.cs" t="Include" />
+          <e p="Tile.cs" t="Include" />
+          <e p="Traverser_Cargo.cs" t="Include" />
+          <e p="Traverser_Robot.cs" t="Include" />
+        </e>
+        <e p="GameManager.cs" t="Include" />
+        <e p="GridUtility.cs" t="Include" />
+        <e p="GUI" t="Include">
+          <e p="SettingsGUI.cs" t="Include" />
+        </e>
+        <e p="Pathfinding" t="Include">
+          <e p="Algorithms" t="Include">
+            <e p="AStar.cs" t="Include" />
+            <e p="FillNode.cs" t="Include" />
+            <e p="PathfindingNode.cs" t="Include" />
+            <e p="SimpleFill.cs" t="Include" />
+          </e>
+          <e p="Area.cs" t="Include" />
+          <e p="IFillAlgorithm.cs" t="Include" />
+          <e p="IPathfindingAlgorithm.cs" t="Include" />
+          <e p="ITraverser.cs" t="Include" />
+          <e p="Path.cs" t="Include" />
+          <e p="Pathfinder.cs" t="Include" />
+        </e>
+        <e p="Point.cs" t="Include" />
+        <e p="TileBlock.cs" t="Include" />
+      </e>
+      <e p="MrRoboto.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

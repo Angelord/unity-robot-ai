@@ -32,8 +32,6 @@ namespace MrRob {
 				Destroy(this);
 				return;
 			}
-
-			Initialize(10, 10);
 		}
 
 		private void OnDestroy() {
