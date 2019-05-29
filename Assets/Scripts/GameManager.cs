@@ -7,7 +7,7 @@ using MrRob.GUI;
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
 
-		private const float MIN_STEP_DURATION = 0.005f;
+		private const float MIN_STEP_DURATION = 0.0025f;
 		private const float MAX_STEP_DURATION = 5.0f;
 
 		[SerializeField] private float spacing = 1.0f;
@@ -87,8 +87,7 @@ namespace MrRob {
 		public void OnTileClick(Point pos) {
 			if(!game.Over) {
 				game.ToggleBlocking(pos);
-				MeshRenderer blockRenderer = tileBlocks[pos.X + pos.Y * game.Width].GetComponent<MeshRenderer>();
-				blockRenderer.enabled = !game.GetTile(pos).Blocked;
+				tileBlocks[pos.X + pos.Y * game.Width].SetPassable(!game.GetTile(pos).Blocked);
 			}
 		}
 
