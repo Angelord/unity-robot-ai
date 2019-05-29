@@ -49,7 +49,7 @@ namespace MrRob.GameLogic {
         }
 
         public int GetTraverseCost(Tile start, Tile end) {
-            return 1;
+            return !robot.TileIsRevealed(end.Position) ? 1 : 2;
         }
     }
 }
