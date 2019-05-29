@@ -30,6 +30,9 @@ namespace MrRob.GameLogic {
         }
 
         public int GetTraverseCost(Tile start, Tile end) {
+            if(!robot.TileIsRevealed(end.Position)) {
+                return 2;
+            }
             return 1;
         }
     }
