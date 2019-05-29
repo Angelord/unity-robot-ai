@@ -2,15 +2,24 @@ namespace MrRob.GameLogic {
     public class Cargo {
 
         private RobotGame game;
+        private Point startingPos;
+        private Point curPos;
 
-        public Point Position { get; set; }
+        public Point Position { 
+            get { return curPos; } 
+            set { startingPos = value; curPos = value; } 
+        }
 
         public Cargo(RobotGame game) { 
             this.game = game;
         }
 
+        public void Reset() {
+            curPos = startingPos;
+        }
+
         public bool CanPush(Point direction) {
-            Point newPos = Position + direction;
+            Point newPos = curPos + direction;
             if(!game.Contains(newPos)) { return false; }
 
             return !game.GetTile(newPos).Blocked; 
@@ -20,7 +29,7 @@ namespace MrRob.GameLogic {
             if(!CanPush(direction)) {
                 throw new System.InvalidOperationException(string.Format("Invalid push direction for cargo {0}", direction));
             }
-            Position = Position + direction;
+            curPos = curPos + direction;
         }
     }
 }

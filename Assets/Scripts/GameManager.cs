@@ -75,18 +75,25 @@ namespace MrRob {
 		}
 
 		public void OnTileClick(Point pos) {
-			game.ToggleBlocking(pos);
-			MeshRenderer blockRenderer = tileBlocks[pos.X + pos.Y * game.Width].GetComponent<MeshRenderer>();
-			blockRenderer.enabled = !game.GetTile(pos).Blocked;
+			if(!game.Over) {
+				game.ToggleBlocking(pos);
+				MeshRenderer blockRenderer = tileBlocks[pos.X + pos.Y * game.Width].GetComponent<MeshRenderer>();
+				blockRenderer.enabled = !game.GetTile(pos).Blocked;
+			}
 		}
 
 		public void OnTileRightClick(Point pos) {
-			if(game.TrySetCargoPos(pos)) {
+			if(!game.Over && game.TrySetCargoPos(pos)) {
 				cargo.transform.position = GridToWorldPos(pos);
 			}
 		}
 
 		public void RunSimulation() {
+			if(game.Over) {
+				Reset();
+				return;
+			}
+
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(false);
 			}
@@ -97,6 +104,16 @@ namespace MrRob {
 
 			StopAllCoroutines();
 			StartCoroutine(ReplaySimulation(result));
+		}
+
+		public void Reset() {
+			StopAllCoroutines();
+			game.Reset();
+			foreach(TileBlock block in tileBlocks) {
+				block.SetRevealed(true);
+			}
+			robot.transform.position = GridToWorldPos(game.Robot.Position);
+			cargo.transform.position = GridToWorldPos(game.Cargo.Position);
 		}
 
 		private IEnumerator ReplaySimulation(GameResult result) {

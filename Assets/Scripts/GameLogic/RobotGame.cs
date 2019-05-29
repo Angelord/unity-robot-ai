@@ -20,6 +20,7 @@ namespace MrRob.GameLogic  {
 		public Cargo Cargo { get { return cargo; } }
 		public Point GoalPosition { get { return goalPos; } }
 		public Tile[] Tiles { get { return tiles; } }
+		public bool Over { get { return robot.Done; } }
 
 		public RobotGame(int width, int length) {
 			this.width = width;
@@ -37,10 +38,15 @@ namespace MrRob.GameLogic  {
 			cargo = new Cargo(this) { Position = new Point(width / 2, length / 2) };
 		}
 
+		public void Reset() {
+			robot.Reset();
+			cargo.Reset();
+		}
+
 		public GameResult Run() {
 			GameResult result = new GameResult(this);
 
-			robot.Init();
+			robot.Begin();
 
 			int curStep = 0;
 			do {

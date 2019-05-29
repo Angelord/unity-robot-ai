@@ -6,15 +6,15 @@ namespace MrRob.GameLogic {
     public class Robot {
 
         private RobotGame game;
-        private Point position;
-        private Point orientation;
-        private bool[] tilesRevealed;
-        private bool cargoFound;
         private Dictionary<string, RobotState> states = new Dictionary<string, RobotState>();
         private RobotState prevState = null;
         private RobotState curState = null;
         private IPathfindingAlgorithm<Tile> pathfinding;
         private Traverser_Robot traverser;
+        private Point position;
+        private Point orientation;
+        private bool[] tilesRevealed;
+        private bool cargoFound;
         private bool done = false;
         private string resultMsg;
 
@@ -29,8 +29,6 @@ namespace MrRob.GameLogic {
 
         public Robot(RobotGame game) {
             this.game = game;
-            this.position = Point.ZERO;
-            this.orientation = Point.UP;
             this.pathfinding = new AStar<Tile>(game.Tiles, game.Width);
             this.traverser = new Traverser_Robot(this);
 
@@ -40,14 +38,31 @@ namespace MrRob.GameLogic {
             states.Add("Pushing", new State_Pushing(this));
             states.Add("Idle", new State_Idle(this));
         
-            EnterState("Idle");
+            Reset();
         }
 
-        public void Init() {
+        public void Begin() {
+            if(done) { Reset(); }
+
             SetTileRevealed(Point.ZERO);
             SetTileRevealed(game.GoalPosition);
 
             EnterState("Searching");
+        }
+
+        public void Reset() {
+            position = Point.ZERO;
+            orientation = Point.UP;
+            done = false;
+            resultMsg = null;
+            cargoFound = false;
+            prevState = null;
+
+            for(int i = 0; i < tilesRevealed.Length; i++) {
+                tilesRevealed[i] = false;
+            }
+
+            EnterState("Idle");
         }
 
         public void Step() {
