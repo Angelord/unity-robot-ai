@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MrRob.GameLogic;
+using MrRob.GUI;
 
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
@@ -15,6 +16,7 @@ namespace MrRob {
 		[SerializeField] private GameObject robotPrefab;
 		[SerializeField] private GameObject cargoPrefab;
 		[SerializeField] private Vector2 minMaxCameraSz = new Vector2(6.0f, 12.5f);
+		[SerializeField] private ResultsGUI resultsGui;
 		
 		private static GameManager instance;
 		private RobotGame game; 
@@ -116,6 +118,7 @@ namespace MrRob {
 
 		public void Reset() {
 			StopAllCoroutines();
+			resultsGui.Hide();
 			game.Reset();
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(true);
@@ -138,6 +141,8 @@ namespace MrRob {
 					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
 				}
 			}
+			
+			resultsGui.ShowResults(result);
 		}
 
 		public Quaternion DirToLookRotation(Point direction) {

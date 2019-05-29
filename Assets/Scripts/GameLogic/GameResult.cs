@@ -10,6 +10,7 @@ namespace MrRob.GameLogic {
         private bool success; 
 
         public List<Frame> Frames { get { return frames; } }
+        public int FrameCount { get { return frames.Count; } }
         public string Message { get { return message; } }
         public bool Success { get { return success; } }
 
