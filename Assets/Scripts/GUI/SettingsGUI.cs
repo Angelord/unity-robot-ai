@@ -30,7 +30,7 @@ namespace MrRob.GUI {
             OnLengthChange();
         }
 
-        public void OnBeginClick() {
+        public void OnClick() {
             manager.Initialize(WidthVal, LengthVal);
             this.gameObject.SetActive(false);
         }

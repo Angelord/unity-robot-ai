@@ -16,6 +16,7 @@ namespace MrRob {
 		[SerializeField] private GameObject robotPrefab;
 		[SerializeField] private GameObject cargoPrefab;
 		[SerializeField] private Vector2 minMaxCameraSz = new Vector2(6.0f, 12.5f);
+		[SerializeField] private SearchGUI searchGui;
 		[SerializeField] private ResultsGUI resultsGui;
 		
 		private static GameManager instance;
@@ -28,6 +29,8 @@ namespace MrRob {
 		private bool replaying = false;
 
 		public static GameManager Instance { get { return instance; } }
+		public bool Replaying { get { return replaying; } }
+		public bool GameOver { get { return game.Over; } }
 
 		private void Start() {
 			if(instance == null) {
@@ -40,21 +43,12 @@ namespace MrRob {
 		}
 
 		private void OnDestroy() {
-			Destroy(this);
+			if (instance == this) {
+				instance = null;
+			}
 		}
 
 		private void Update() {
-			if(Input.GetKeyDown(KeyCode.Space)) {
-				if (replaying) {
-					SkipToEnd();
-				}
-				else if(game.Over) {
-					Reset();
-				}
-				else {
-					RunSimulation();
-				}
-			}
 			if(Input.GetButtonDown("Speed_Decr") && stepDuration > MIN_STEP_DURATION) {
 				stepDuration *= 2.0f;
 			}
@@ -62,7 +56,7 @@ namespace MrRob {
 				stepDuration /= 2.0f;
 			}
 		}
-
+		
 		public void Initialize(int width, int length) {
 
 			Camera cam = Camera.main;
@@ -92,8 +86,9 @@ namespace MrRob {
 			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
 			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform);
 			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform);
+			searchGui.gameObject.SetActive(true);
 		}
-
+		
 		public void OnTileClick(Point pos) {
 			if(!game.Over) {
 				game.ToggleBlocking(pos);
@@ -107,8 +102,15 @@ namespace MrRob {
 			}
 		}
 
-		private void RunSimulation() {
-			if(game.Over) { Reset(); }
+		public void RunSimulation() {
+
+			if (game.Over) {
+				if (replaying) {
+					StopAllCoroutines();
+					replaying = false;
+				}
+				Reset();
+			}
 
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(false);
@@ -122,8 +124,9 @@ namespace MrRob {
 			StartCoroutine(ReplaySimulation(lastResult));
 		}
 
-		private void Reset() {
+		public void Reset() {
 			StopAllCoroutines();
+			searchGui.Show();
 			resultsGui.Hide();
 			game.Reset();
 			foreach(TileBlock block in tileBlocks) {
@@ -134,7 +137,9 @@ namespace MrRob {
 			cargo.transform.position = GridToWorldPos(game.Cargo.Position);
 		}
 
-		private void SkipToEnd() {
+		public void SkipToEnd() {
+			if (!replaying) { return; }
+
 			StopAllCoroutines();
 			ShowFrame(lastResult.LastFrame);
 			for (int y = 0; y < game.Length; y++) {
@@ -143,7 +148,7 @@ namespace MrRob {
 				}
 			}
 
-			resultsGui.ShowResults(lastResult);
+			ShowResults(lastResult);
 			replaying = false;
 		}
 
@@ -156,7 +161,7 @@ namespace MrRob {
 				ShowFrame(frame);
 			}
 			
-			resultsGui.ShowResults(result);
+			ShowResults(result);
 			replaying = false;
 		}
 
@@ -170,6 +175,11 @@ namespace MrRob {
 			}
 		}
 
+		private void ShowResults(GameResult result) {
+			searchGui.Hide();
+			resultsGui.ShowResults(result);
+		}
+		
 		private Quaternion DirToLookRotation(Point direction) {
 			return Quaternion.LookRotation(
 					new Vector3(direction.X, 0.0f, direction.Y), 

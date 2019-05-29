@@ -23,7 +23,9 @@
         <e p="GameManager.cs" t="Include" />
         <e p="GridUtility.cs" t="Include" />
         <e p="GUI" t="Include">
+          <e p="KeyCodeButton.cs" t="Include" />
           <e p="ResultsGUI.cs" t="Include" />
+          <e p="SearchGUI.cs" t="Include" />
           <e p="SettingsGUI.cs" t="Include" />
         </e>
         <e p="Pathfinding" t="Include">
