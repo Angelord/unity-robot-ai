@@ -10,10 +10,10 @@ namespace MrRob.GameLogic {
         private bool success; 
 
         public List<Frame> Frames { get { return frames; } }
+        public Frame LastFrame { get { return frames[frames.Count - 1]; } }
         public int FrameCount { get { return frames.Count; } }
         public string Message { get { return message; } }
         public bool Success { get { return success; } }
-
         public GameResult(RobotGame game) {
             this.game = game;
             this.lastFrameReveal = new bool[game.Width * game.Length];
@@ -43,6 +43,10 @@ namespace MrRob.GameLogic {
         public void End(string message) {
             this.message = message;
             success = frames[frames.Count - 1].CargoPos == game.GoalPosition;
+        }
+
+        public bool TileWasRevealed(Point pos) {
+            return lastFrameReveal[pos.X + pos.Y * game.Width];
         }
 
         public class Frame {

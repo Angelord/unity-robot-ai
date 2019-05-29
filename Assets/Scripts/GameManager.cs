@@ -24,6 +24,8 @@ namespace MrRob {
 		private GameObject robot;
 		private GameObject cargo;
 		private float stepDuration = 0.05f;
+		private GameResult lastResult;
+		private bool replaying = false;
 
 		public static GameManager Instance { get { return instance; } }
 
@@ -43,7 +45,15 @@ namespace MrRob {
 
 		private void Update() {
 			if(Input.GetKeyDown(KeyCode.Space)) {
-				RunSimulation();
+				if (replaying) {
+					SkipToEnd();
+				}
+				else if(game.Over) {
+					Reset();
+				}
+				else {
+					RunSimulation();
+				}
 			}
 			if(Input.GetButtonDown("Speed_Decr") && stepDuration > MIN_STEP_DURATION) {
 				stepDuration *= 2.0f;
@@ -97,25 +107,22 @@ namespace MrRob {
 			}
 		}
 
-		public void RunSimulation() {
-			if(game.Over) {
-				Reset();
-				return;
-			}
+		private void RunSimulation() {
+			if(game.Over) { Reset(); }
 
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(false);
 			}
 
-			GameResult result = game.Run();
+			lastResult = game.Run();
 		
-			Debug.Log(string.Format("Game Result : {0}. Message : {1}", result.Success, result.Message));
+			Debug.Log(string.Format("Game Result : {0}. Message : {1}", lastResult.Success, lastResult.Message));
 
 			StopAllCoroutines();
-			StartCoroutine(ReplaySimulation(result));
+			StartCoroutine(ReplaySimulation(lastResult));
 		}
 
-		public void Reset() {
+		private void Reset() {
 			StopAllCoroutines();
 			resultsGui.Hide();
 			game.Reset();
@@ -127,32 +134,52 @@ namespace MrRob {
 			cargo.transform.position = GridToWorldPos(game.Cargo.Position);
 		}
 
+		private void SkipToEnd() {
+			StopAllCoroutines();
+			ShowFrame(lastResult.LastFrame);
+			for (int y = 0; y < game.Length; y++) {
+				for (int x = 0; x < game.Width; x++) {
+					tileBlocks[x + y * game.Width].SetRevealed(lastResult.TileWasRevealed(new Point(x, y)));
+				}
+			}
+
+			resultsGui.ShowResults(lastResult);
+			replaying = false;
+		}
+
 		private IEnumerator ReplaySimulation(GameResult result) {
 
+			replaying = true;
 			foreach(GameResult.Frame frame in result.Frames) {
 				yield return new WaitForSeconds(stepDuration);
 
-				robot.transform.position = GridToWorldPos(frame.RobotPos);
-				robot.transform.rotation = DirToLookRotation(frame.RobotOrientation);
-				cargo.transform.position = GridToWorldPos(frame.CargoPos);
-
-				foreach(Point reveal in frame.RevealedPositions) {
-					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
-				}
+				ShowFrame(frame);
 			}
 			
 			resultsGui.ShowResults(result);
+			replaying = false;
 		}
 
-		public Quaternion DirToLookRotation(Point direction) {
+		private void ShowFrame(GameResult.Frame frame) {
+			robot.transform.position = GridToWorldPos(frame.RobotPos);
+			robot.transform.rotation = DirToLookRotation(frame.RobotOrientation);
+			cargo.transform.position = GridToWorldPos(frame.CargoPos);
+
+			foreach(Point reveal in frame.RevealedPositions) {
+				tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
+			}
+		}
+
+		private Quaternion DirToLookRotation(Point direction) {
 			return Quaternion.LookRotation(
 					new Vector3(direction.X, 0.0f, direction.Y), 
 					Vector3.up
 					);
 		}
 
-		public Vector3 GridToWorldPos(Point pos) {
+		private Vector3 GridToWorldPos(Point pos) {
 			return new Vector3((pos.X - game.Width / 2) * spacing, 0.0f, (pos.Y - game.Length / 2) * spacing);
 		}
+		
 	}
 }
