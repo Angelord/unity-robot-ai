@@ -45,10 +45,10 @@ namespace MrRob {
 				RunSimulation();
 			}
 			if(Input.GetButtonDown("Speed_Decr") && stepDuration > MIN_STEP_DURATION) {
-				stepDuration /= 2.0f;
+				stepDuration *= 2.0f;
 			}
 			if(Input.GetButtonDown("Speed_Incr") && stepDuration < MAX_STEP_DURATION) {
-				stepDuration *= 2.0f;
+				stepDuration /= 2.0f;
 			}
 		}
 
