@@ -39,8 +39,8 @@ namespace MrRob.GameLogic {
             frames.Add(newFrame);
         }
 
-        public void End() {
-            message = game.Robot.ResultMsg;
+        public void End(string message) {
+            this.message = message;
             success = frames[frames.Count - 1].CargoPos == game.GoalPosition;
         }
 

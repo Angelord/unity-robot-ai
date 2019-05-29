@@ -13,6 +13,8 @@ namespace MrRob.GameLogic  {
 		private Cargo cargo;
 		private Point goalPos;
 		private Tile[] tiles;
+		private bool over;
+		private string resultMsg;
 
 		public int Width { get { return width; } }
 		public int Length { get { return length; } }
@@ -20,7 +22,7 @@ namespace MrRob.GameLogic  {
 		public Cargo Cargo { get { return cargo; } }
 		public Point GoalPosition { get { return goalPos; } }
 		public Tile[] Tiles { get { return tiles; } }
-		public bool Over { get { return robot.Done; } }
+		public bool Over { get { return over; } }
 
 		public RobotGame(int width, int length) {
 			this.width = width;
@@ -39,11 +41,16 @@ namespace MrRob.GameLogic  {
 		}
 
 		public void Reset() {
+			this.over = false;
 			robot.Reset();
 			cargo.Reset();
 		}
 
 		public GameResult Run() {
+			if(over) {
+				Reset();
+			}
+ 
 			GameResult result = new GameResult(this);
 
 			robot.Begin();
@@ -53,11 +60,16 @@ namespace MrRob.GameLogic  {
 				robot.Step();
 				result.LogFrame();
 				curStep++;
-			} while(!robot.Done && curStep < MAX_STEPS);
+			} while(!over && curStep < MAX_STEPS);
 
-			result.End();
+			result.End(resultMsg);
 
 			return result;
+		}
+
+		public void End(string message) {
+			over = true;
+			resultMsg = message;
 		}
 
 		public void ToggleBlocking(Point pos) {

@@ -22,7 +22,8 @@ namespace MrRob.GameLogic {
 		}
 
 		protected void Done(string message) {
-			Robot.SetDone(message);
+			Robot.Game.End(message);
+			Robot.EnterState("Idle");
 		} 
 	}
 }

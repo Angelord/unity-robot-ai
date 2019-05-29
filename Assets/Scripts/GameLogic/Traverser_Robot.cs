@@ -25,13 +25,23 @@ namespace MrRob.GameLogic {
         }
 
         public bool CanTraverse(Tile node) {
-            if(fixedBlocks.Contains(node.Position)) { return false; }
-            bool canTraverse = robot.CanTraverse(node.Position);
-            
-            if(canTraverse && (!avoidCargo || robot.Game.Cargo.Position != node.Position)) {
+            if(fixedBlocks.Contains(node.Position)) { 
+                return false; 
+            }
+
+            if(!robot.TileIsRevealed(node.Position)) {
                 return true;
             }
-            return false;
+
+            if(node.Blocked) {
+                return false;
+            }
+
+            if(avoidCargo && robot.Game.Cargo.Position == node.Position) {
+                return false;
+            }
+
+            return true;
         }
 
         public bool CanMoveBetween(Tile start, Tile end) {

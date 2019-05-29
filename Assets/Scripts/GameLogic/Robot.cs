@@ -15,8 +15,6 @@ namespace MrRob.GameLogic {
         private Point orientation;
         private bool[] tilesRevealed;
         private bool cargoFound;
-        private bool done = false;
-        private string resultMsg;
 
         public RobotGame Game { get { return game; } }
         public Point Position { get { return position; } }
@@ -24,8 +22,6 @@ namespace MrRob.GameLogic {
         public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }
         public Traverser_Robot Traverser { get { return traverser; } }
         public bool CargoFound { get { return cargoFound; } }
-        public bool Done { get { return done; } }
-        public string ResultMsg { get { return resultMsg; } }
 
         public Robot(RobotGame game) {
             this.game = game;
@@ -42,8 +38,6 @@ namespace MrRob.GameLogic {
         }
 
         public void Begin() {
-            if(done) { Reset(); }
-
             SetTileRevealed(Point.ZERO);
             SetTileRevealed(game.GoalPosition);
 
@@ -53,8 +47,6 @@ namespace MrRob.GameLogic {
         public void Reset() {
             position = Point.ZERO;
             orientation = Point.UP;
-            done = false;
-            resultMsg = null;
             cargoFound = false;
             prevState = null;
 
@@ -71,14 +63,6 @@ namespace MrRob.GameLogic {
             }
         }
 
-        public void SetDone(string msg) {
-            if(!done) {
-                done = true;
-                resultMsg = msg;
-                EnterState("Idle");
-            }
-        }
- 
         public void Look(Point direction) {
             orientation = direction;
         }
