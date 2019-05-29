@@ -7,8 +7,10 @@ namespace MrRob.GameLogic {
 
         private Robot robot;
         private List<Point> fixedBlocks = new List<Point>();
+        private bool avoidCargo = true;
 
         public List<Point> FixedBlocks { get { return fixedBlocks; } set { fixedBlocks = value; } }
+        public bool AvoidCargo { get { return avoidCargo; } set { avoidCargo = value; } }
 
         public Traverser_Robot(Robot robot) {
             this.robot = robot;
@@ -24,7 +26,12 @@ namespace MrRob.GameLogic {
 
         public bool CanTraverse(Tile node) {
             if(fixedBlocks.Contains(node.Position)) { return false; }
-            return robot.CanTraverse(node.Position);
+            bool canTraverse = robot.CanTraverse(node.Position);
+            
+            if(canTraverse && (!avoidCargo || robot.Game.Cargo.Position != node.Position)) {
+                return true;
+            }
+            return false;
         }
 
         public bool CanMoveBetween(Tile start, Tile end) {

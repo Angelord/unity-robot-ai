@@ -90,23 +90,29 @@ namespace MrRob.GameLogic {
                 throw new System.ArgumentException(string.Format("Move position {0} is outside map bounds!", newPos));
             }
 
+            SetTileRevealed(newPos);
+
             if(newPos == game.Cargo.Position) {
-                return TryPushCargo();
+                if(cargoFound) {
+                    return TryPushCargo();
+                }
+                else {
+                    cargoFound = true;
+                    return false;
+                }
             }
 
             if(game.GetTile(newPos).Blocked) {
-                SetTileRevealed(newPos);
                 return false;
             }
 
             position = newPos;
-            SetTileRevealed(newPos);
             return true;
         }
 
         public bool CanTraverse(Point pos) { //Determines if the robot can step on a tile based on current information
             return  game.Contains(pos) &&
-                    (!TileIsRevealed(pos) || (!game.GetTile(pos).Blocked && game.Cargo.Position != pos)); 
+                    (!TileIsRevealed(pos) || !game.GetTile(pos).Blocked); 
         }
 
         public void EnterState(string stateName) {
@@ -138,9 +144,6 @@ namespace MrRob.GameLogic {
 
         private void SetTileRevealed(Point pos) {
             tilesRevealed[pos.X + pos.Y * game.Width] = true;
-            if(pos == game.Cargo.Position) {
-                cargoFound = true;
-            }
         } 
 
         private bool TryPushCargo() {
