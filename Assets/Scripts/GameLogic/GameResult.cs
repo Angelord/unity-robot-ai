@@ -6,8 +6,12 @@ namespace MrRob.GameLogic {
         private RobotGame game;
         private bool[] lastFrameReveal;
         private List<Frame> frames = new List<Frame>();
+        private string message;
+        private bool success; 
 
         public List<Frame> Frames { get { return frames; } }
+        public string Message { get { return message; } }
+        public bool Success { get { return success; } }
 
         public GameResult(RobotGame game) {
             this.game = game;
@@ -33,6 +37,11 @@ namespace MrRob.GameLogic {
             }
 
             frames.Add(newFrame);
+        }
+
+        public void End() {
+            message = game.Robot.ResultMsg;
+            success = frames[frames.Count - 1].CargoPos == game.GoalPosition;
         }
 
         public class Frame {

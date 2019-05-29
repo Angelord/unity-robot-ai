@@ -93,6 +93,8 @@ namespace MrRob {
 
 			GameResult result = game.Run();
 		
+			Debug.Log(string.Format("Game Result : {0}. Message : {1}", result.Success, result.Message));
+
 			StopAllCoroutines();
 			StartCoroutine(ReplaySimulation(result));
 		}

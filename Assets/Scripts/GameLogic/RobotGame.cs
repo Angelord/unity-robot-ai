@@ -49,6 +49,8 @@ namespace MrRob.GameLogic  {
 				curStep++;
 			} while(!robot.Done && curStep < MAX_STEPS);
 
+			result.End();
+
 			return result;
 		}
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace MrRob.GameLogic {
 	public abstract class RobotState { 
@@ -23,8 +22,7 @@ namespace MrRob.GameLogic {
 		}
 
 		protected void Done(string message) {
-			UnityEngine.Debug.Log(message);
-			Robot.EnterState("Done");
+			Robot.SetDone(message);
 		} 
 	}
 }
