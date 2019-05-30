@@ -24,6 +24,7 @@ namespace MrRob {
 		private TileBlock[] tileBlocks;
 		private MovingObject robot;
 		private MovingObject cargo;
+		private GameObject goal;
 		private GameResult lastResult;
 		private bool replaying = false;
 
@@ -94,7 +95,7 @@ namespace MrRob {
 					tileBlocks[x + y * width] = blockComp;
 				}
 			}
-			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
+			goal = Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
 			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			searchGui.gameObject.SetActive(true);
@@ -108,8 +109,17 @@ namespace MrRob {
 		}
 
 		public void OnTileRightClick(Point pos) {
-			if(!game.Over && game.TrySetCargoPos(pos)) {
-				cargo.transform.position = GridToWorldPos(pos);
+			
+			if(Input.GetKey(KeyCode.G)) {
+				if (!game.Over && !game.GetTile(pos).Blocked) {
+					game.GoalPosition = pos;
+					goal.transform.position = GridToWorldPos(pos);
+				}
+			}
+			else {
+				if(!game.Over && game.TrySetCargoPos(pos)) {
+					cargo.transform.position = GridToWorldPos(pos);
+				}
 			}
 		}
 

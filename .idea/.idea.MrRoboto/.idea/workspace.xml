@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48054d23-6ea9-4cf1-a024-8123cd839e1d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MrRoboto/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MrRoboto/.idea/indexLayout.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +16,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
-              <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+              <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
               <folding>
                 <marker date="1559206603000" expanded="true" signature="44:1144" ph="{...}" />
                 <marker date="1559206603000" expanded="true" signature="89:1142" ph="{...}" />
@@ -39,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="20">
-              <caret line="69" column="57" lean-forward="true" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+              <caret line="69" column="57" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
               <folding>
                 <marker date="1559207598000" expanded="false" signature="6:82" ph="..." />
                 <marker date="1559207598000" expanded="true" signature="111:2271" ph="{...}" />
@@ -178,7 +178,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -269,12 +269,12 @@
       <workItem from="1559134660747" duration="5674000" />
       <workItem from="1559142600954" duration="1737000" />
       <workItem from="1559149747208" duration="812000" />
-      <workItem from="1559203316908" duration="3564000" />
+      <workItem from="1559203316908" duration="3672000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11787000" />
+    <option name="totallyTimeSpent" value="11895000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -287,7 +287,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.36480686" />
@@ -466,7 +465,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
           <folding>
             <marker date="1559206603000" expanded="true" signature="44:1144" ph="{...}" />
             <marker date="1559206603000" expanded="true" signature="89:1142" ph="{...}" />
@@ -556,7 +555,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
-          <caret line="69" column="57" lean-forward="true" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+          <caret line="69" column="57" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
           <folding>
             <marker date="1559207598000" expanded="false" signature="6:82" ph="..." />
             <marker date="1559207598000" expanded="true" signature="111:2271" ph="{...}" />
