@@ -16,7 +16,7 @@ namespace MrRob.GameLogic {
 
 		public override void Step() {
 
-			if(Robot.CargoFound) {
+			if(Robot.CargoFound && !Robot.ExploreFirst) {
 				Robot.EnterState("Pushing");
 				return;
 			}
@@ -46,13 +46,23 @@ namespace MrRob.GameLogic {
 
 			Point nearest = FindNearestUnrevealed();
 			if(nearest == Point.MINUS) {
-				Done("Finished exploring map");
+				if (Robot.CargoFound) {
+					Robot.EnterState("Pushing");
+				}
+				else {
+					Done("Finished exploring map");
+				}
 				return;
 			}
 
 			Path pathToNearest = Robot.Pathfinding.GetPath(Robot.Position, nearest, Robot.Traverser);
 			if(!pathToNearest.Exists || pathToNearest.Length == 1) {
-				Done("Finished exploring map");
+				if (Robot.CargoFound) {
+					Robot.EnterState("Pushing");
+				}
+				else {
+					Done("Finished exploring map");
+				}
 				return;
 			}
 

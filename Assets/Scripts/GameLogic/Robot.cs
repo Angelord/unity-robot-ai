@@ -23,6 +23,8 @@ namespace MrRob.GameLogic {
         public Traverser_Robot Traverser { get { return traverser; } }
         public bool CargoFound { get { return cargoFound; } }
 
+        public bool ExploreFirst { get; set; }
+
         public Robot(RobotGame game) {
             this.game = game;
             this.pathfinding = new AStar<Tile>(game.Tiles, game.Width);

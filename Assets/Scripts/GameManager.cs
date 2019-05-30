@@ -47,6 +47,13 @@ namespace MrRob {
 			}
 		}
 
+		private void Update() {
+			if (Input.GetKeyDown(KeyCode.E) && !game.Over) {
+				game.Robot.ExploreFirst = !game.Robot.ExploreFirst;
+				Debug.Log("Explore first  : " + game.Robot.ExploreFirst);
+			}
+		}
+
 		private void OnDestroy() {
 			if (instance == this) {
 				instance = null;
