@@ -12,7 +12,6 @@ namespace MrRob.Objects {
 		public float MoveDuration {
 			get { return moveDuration; }
 			set {
-				//moveStartTime -= (value - moveDuration) / 2;
 				moveStartTime = Time.time - Progress * value;
 				moveDuration = value;
 			}
@@ -22,7 +21,6 @@ namespace MrRob.Objects {
 				return Mathf.Clamp((Time.time - moveStartTime) / moveDuration, 0.0f, 1.0f);
 			}
 		}
-		//(Time/time - moveStartTime) / moveDuration = x
 		
 		public bool Moving { get { return moving; } }
 

@@ -52,15 +52,22 @@ namespace MrRob {
 			}
 		}
 
-		private void Update() {
-			if(Input.GetButtonDown("Speed_Decr") && StepDuration < MAX_STEP_DURATION) {
-				StepDuration *= 2.0f;
-			}
-			if(Input.GetButtonDown("Speed_Incr") && StepDuration > MIN_STEP_DURATION) {
+		public bool IncreaseSpeed() {
+			if(StepDuration > MIN_STEP_DURATION) {
 				StepDuration /= 2.0f;
+				return true;
 			}
+			return false;
 		}
-		
+
+		public bool DecreaseSpeed() {
+			if(StepDuration < MAX_STEP_DURATION) {
+				StepDuration *= 2.0f;
+				return true;
+			}
+			return false;
+		}
+
 		public void Initialize(int width, int length) {
 
 			Camera cam = Camera.main;
