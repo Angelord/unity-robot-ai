@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="48054d23-6ea9-4cf1-a024-8123cd839e1d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GUI/SearchGUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GUI/SearchGUI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,10 +36,38 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="69" column="57" lean-forward="true" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+              <folding>
+                <marker date="1559207598000" expanded="false" signature="6:82" ph="..." />
+                <marker date="1559207598000" expanded="true" signature="111:2271" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="137:2269" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="823:1206" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="993:1097" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1030:1092" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1230:1307" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1335:1694" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1349:1368" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1592:1644" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1730:1775" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1817:1922" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1848:1918" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1964:2063" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="1994:2018" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="2099:2186" ph="{...}" />
+                <marker date="1559207598000" expanded="true" signature="2221:2266" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/GUI/SearchGUI.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="62" selection-start-line="10" selection-start-column="62" selection-end-line="10" selection-end-column="62" />
+            <state relative-caret-position="375">
+              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
               <folding>
                 <marker date="1559207260000" expanded="true" signature="6:114" ph="..." />
                 <marker date="1559207260000" expanded="true" signature="136:1656" ph="{...}" />
@@ -139,10 +164,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/GUI/ResultsGUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameLogic/Traverser_Cargo.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameLogic/Traverser_Robot.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GUI/SearchGUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs" />
       </list>
     </option>
   </component>
@@ -177,6 +202,12 @@
               <item name="" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="8711f2a6:AssetsRoot" />
               <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+            </path>
+            <path>
+              <item name="" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="8711f2a6:AssetsRoot" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+              <item name="GameLogic" type="1045f7f1:UnityExplorerNode" />
             </path>
           </expand>
           <select />
@@ -238,12 +269,12 @@
       <workItem from="1559134660747" duration="5674000" />
       <workItem from="1559142600954" duration="1737000" />
       <workItem from="1559149747208" duration="812000" />
-      <workItem from="1559203316908" duration="3334000" />
+      <workItem from="1559203316908" duration="3564000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11557000" />
+    <option name="totallyTimeSpent" value="11787000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -258,33 +289,6 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.36480686" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Unity" order="1" />
-      <window_info anchor="bottom" id="Unit Tests" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info anchor="bottom" id="Database Changes" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Performance Profiler" order="7" />
-      <window_info anchor="bottom" id="NuGet" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="9" />
-      <window_info anchor="bottom" id="Find" order="10" weight="0.32891566" />
-      <window_info anchor="bottom" id="Run" order="11" />
-      <window_info anchor="bottom" id="Debug" order="12" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="13" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="14" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="15" />
-      <window_info anchor="right" id="Database" order="0" />
-      <window_info anchor="right" id="Unit Tests Coverage" order="1" />
-      <window_info anchor="right" id="Errors In Solution" order="2" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
-    </layout>
-    <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.36480686" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
@@ -310,7 +314,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="3" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
-    </layout-to-restore>
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -459,31 +463,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-          <folding>
-            <marker date="1559150066000" expanded="false" signature="6:82" ph="..." />
-            <marker date="1559150066000" expanded="true" signature="111:2174" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="137:2172" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="823:1206" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="993:1097" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1030:1092" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1230:1293" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1321:1597" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1335:1354" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1633:1678" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1720:1825" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1751:1821" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1867:1966" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="1897:1921" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="2002:2089" ph="{...}" />
-            <marker date="1559150066000" expanded="true" signature="2124:2169" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Objects/MovingObject.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -552,8 +531,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/GUI/SearchGUI.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="62" selection-start-line="10" selection-start-column="62" selection-end-line="10" selection-end-column="62" />
+        <state relative-caret-position="375">
+          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
           <folding>
             <marker date="1559207260000" expanded="true" signature="6:114" ph="..." />
             <marker date="1559207260000" expanded="true" signature="136:1656" ph="{...}" />
@@ -570,6 +549,32 @@
             <marker date="1559207260000" expanded="true" signature="1491:1651" ph="{...}" />
             <marker date="1559207260000" expanded="true" signature="1519:1576" ph="{...}" />
             <marker date="1559207260000" expanded="true" signature="1576:1647" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameLogic/RobotGame.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="69" column="57" lean-forward="true" selection-start-line="69" selection-start-column="57" selection-end-line="69" selection-end-column="57" />
+          <folding>
+            <marker date="1559207598000" expanded="false" signature="6:82" ph="..." />
+            <marker date="1559207598000" expanded="true" signature="111:2271" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="137:2269" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="823:1206" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="993:1097" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1030:1092" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1230:1307" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1335:1694" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1349:1368" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1592:1644" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1730:1775" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1817:1922" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1848:1918" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1964:2063" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="1994:2018" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="2099:2186" ph="{...}" />
+            <marker date="1559207598000" expanded="true" signature="2221:2266" ph="{...}" />
           </folding>
         </state>
       </provider>

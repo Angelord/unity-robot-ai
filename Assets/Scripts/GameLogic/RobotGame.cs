@@ -44,7 +44,8 @@ namespace MrRob.GameLogic  {
 		}
 
 		public void Reset() {
-			this.over = false;
+			over = false;
+			resultMsg = "";
 			robot.Reset();
 			cargo.Reset();
 		}
@@ -64,6 +65,10 @@ namespace MrRob.GameLogic  {
 				result.LogFrame();
 				curStep++;
 			} while(!over && curStep < MAX_STEPS);
+
+			if (curStep == MAX_STEPS) {
+				resultMsg = "Steps exceeded step limit!";
+			}
 
 			result.End(resultMsg);
 
