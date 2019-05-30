@@ -1,14 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MrRob.GameLogic;
 using MrRob.GUI;
+using MrRob.Objects;
 
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
 
 		private const float MIN_STEP_DURATION = 0.0025f;
-		private const float MAX_STEP_DURATION = 5.0f;
+		private const float MAX_STEP_DURATION = 2.0f;
 
 		[SerializeField] private float spacing = 1.0f;
 		[SerializeField] private GameObject tilePrefab;
@@ -22,15 +22,19 @@ namespace MrRob {
 		private static GameManager instance;
 		private RobotGame game; 
 		private TileBlock[] tileBlocks;
-		private GameObject robot;
-		private GameObject cargo;
-		private float stepDuration = 0.05f;
+		private MovingObject robot;
+		private MovingObject cargo;
 		private GameResult lastResult;
 		private bool replaying = false;
 
 		public static GameManager Instance { get { return instance; } }
 		public bool Replaying { get { return replaying; } }
 		public bool GameOver { get { return game.Over; } }
+
+		private float StepDuration {
+			get { return robot.MoveDuration; }
+			set { robot.MoveDuration = cargo.MoveDuration = value; }
+		}
 
 		private void Start() {
 			if(instance == null) {
@@ -49,11 +53,11 @@ namespace MrRob {
 		}
 
 		private void Update() {
-			if(Input.GetButtonDown("Speed_Decr") && stepDuration > MIN_STEP_DURATION) {
-				stepDuration *= 2.0f;
+			if(Input.GetButtonDown("Speed_Decr") && StepDuration < MAX_STEP_DURATION) {
+				StepDuration *= 2.0f;
 			}
-			if(Input.GetButtonDown("Speed_Incr") && stepDuration < MAX_STEP_DURATION) {
-				stepDuration /= 2.0f;
+			if(Input.GetButtonDown("Speed_Incr") && StepDuration > MIN_STEP_DURATION) {
+				StepDuration /= 2.0f;
 			}
 		}
 		
@@ -84,8 +88,8 @@ namespace MrRob {
 				}
 			}
 			Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
-			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform);
-			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform);
+			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
+			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			searchGui.gameObject.SetActive(true);
 		}
 		
@@ -141,7 +145,12 @@ namespace MrRob {
 			if (!replaying) { return; }
 
 			StopAllCoroutines();
-			ShowFrame(lastResult.LastFrame);
+
+			GameResult.Frame lastFrame = lastResult.LastFrame;
+			robot.MoveInstant(GridToWorldPos(lastFrame.RobotPos));
+			robot.transform.rotation = DirToLookRotation(lastFrame.RobotOrientation);
+			cargo.MoveInstant(GridToWorldPos(lastFrame.CargoPos));
+			
 			for (int y = 0; y < game.Length; y++) {
 				for (int x = 0; x < game.Width; x++) {
 					tileBlocks[x + y * game.Width].SetRevealed(lastResult.TileWasRevealed(new Point(x, y)));
@@ -156,25 +165,22 @@ namespace MrRob {
 
 			replaying = true;
 			foreach(GameResult.Frame frame in result.Frames) {
-				yield return new WaitForSeconds(stepDuration);
 
-				ShowFrame(frame);
+				robot.Move(GridToWorldPos(frame.RobotPos));
+				robot.transform.rotation = DirToLookRotation(frame.RobotOrientation);
+				cargo.Move(GridToWorldPos(frame.CargoPos));
+
+				foreach(Point reveal in frame.RevealedPositions) {
+					tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
+				}
+				
+				yield return new WaitUntil(() => (!robot.Moving && !cargo.Moving));
 			}
 			
 			ShowResults(result);
 			replaying = false;
 		}
-
-		private void ShowFrame(GameResult.Frame frame) {
-			robot.transform.position = GridToWorldPos(frame.RobotPos);
-			robot.transform.rotation = DirToLookRotation(frame.RobotOrientation);
-			cargo.transform.position = GridToWorldPos(frame.CargoPos);
-
-			foreach(Point reveal in frame.RevealedPositions) {
-				tileBlocks[reveal.X + reveal.Y * game.Width].SetRevealed(true);
-			}
-		}
-
+		
 		private void ShowResults(GameResult result) {
 			searchGui.Hide();
 			resultsGui.ShowResults(result);
