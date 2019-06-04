@@ -8,7 +8,7 @@ namespace MrRob.GameLogic  {
 
 		public const int MIN_DIMENSION = 5;
 		public const int MAX_DIMENSION = 20;
-		private const int MAX_STEPS = 1000;
+		private const int MAX_STEPS = 5000;
 
 		private int width;
 		private int length;
