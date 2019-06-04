@@ -19,7 +19,7 @@ namespace MrRob {
 		[SerializeField] private ObjectStateMachine gui;
 		
 		private static GameManager instance;
-		private RobotGame game; 
+		private RobotGame game = null; 
 		private TileBlock[] tileBlocks;
 		private MovingObject robot;
 		private MovingObject cargo;
@@ -28,8 +28,10 @@ namespace MrRob {
 		private bool replaying = false;
 
 		public static GameManager Instance { get { return instance; } }
+		public bool Initialized { get { return game != null; } }
 		public bool Replaying { get { return replaying; } }
 		public bool GameOver { get { return game.Over; } }
+		public bool ExploreFirst { get { return game.Robot.ExploreFirst; } set { game.Robot.ExploreFirst = value; } }
 
 		private float StepDuration {
 			get { return robot.MoveDuration; }
@@ -43,13 +45,6 @@ namespace MrRob {
 			else {
 				Destroy(this);
 				return;
-			}
-		}
-
-		private void Update() {
-			if (Input.GetKeyDown(KeyCode.E) && !game.Over) {
-				game.Robot.ExploreFirst = !game.Robot.ExploreFirst;
-				Debug.Log("Explore first  : " + game.Robot.ExploreFirst);
 			}
 		}
 

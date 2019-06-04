@@ -15,6 +15,7 @@ namespace MrRob.GameLogic {
         private Point orientation;
         private bool[] tilesRevealed;
         private bool cargoFound;
+        private bool exploreFirst = true;
 
         public RobotGame Game { get { return game; } }
         public Point Position { get { return position; } }
@@ -22,8 +23,7 @@ namespace MrRob.GameLogic {
         public IPathfindingAlgorithm<Tile> Pathfinding { get { return pathfinding; } }
         public Traverser_Robot Traverser { get { return traverser; } }
         public bool CargoFound { get { return cargoFound; } }
-
-        public bool ExploreFirst { get; set; }
+        public bool ExploreFirst { get { return exploreFirst; } set { exploreFirst = value; } }
 
         public Robot(RobotGame game) {
             this.game = game;
