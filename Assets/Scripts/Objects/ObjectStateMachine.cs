@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MrRoboto.Objects {
+namespace MrRob.Objects {
 	public class ObjectStateMachine : MonoBehaviour {
 
 		[SerializeField] private string defaultState;

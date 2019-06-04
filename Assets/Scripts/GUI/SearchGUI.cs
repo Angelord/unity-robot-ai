@@ -18,6 +18,10 @@ namespace MrRob.GUI {
 			speedText.enabled = false;
 		}
 
+		private void OnDisable() {
+			speedText.enabled = false;
+		}
+
 		private void Update() {
 			if(Input.GetButtonDown("Speed_Decr") && manager.DecreaseSpeed()) {
 				speedMult /= 2;
@@ -30,7 +34,7 @@ namespace MrRob.GUI {
 		}
 
 		public void OnClick() {
-			DoAction();
+			manager.SkipToEnd();
 		}
 
 		private void ShowSpeedMultiplier() {
@@ -53,17 +57,6 @@ namespace MrRob.GUI {
 			} while (elapsedTime <= speedFadeDuration);
 
 			speedText.enabled = false;
-		}
-		
-		private void DoAction() {
-			if (manager.Replaying) {
-				manager.SkipToEnd();
-				btnText.text = "Run";
-			}
-			else {
-				manager.RunSimulation();
-				btnText.text = "Skip";
-			}
 		}
 	}
 }

@@ -5,7 +5,7 @@ using MrRob.GameLogic;
 
 namespace MrRob.GUI {
 
-    public class SettingsGUI : MonoBehaviour {
+    public class InitializationGUI : MonoBehaviour {
 
         [SerializeField] private Slider widthSlider;
         [SerializeField] private Slider lengthSlider;

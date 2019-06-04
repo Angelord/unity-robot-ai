@@ -14,7 +14,7 @@ namespace MrRob.GUI {
 		[SerializeField] private GameManager manager;
 
 		private void OnDisable() {
-			StopAllCoroutines();
+			text.text = "";
 		}
 
 		public void ShowResults(GameResult result) {

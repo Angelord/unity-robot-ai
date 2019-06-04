@@ -3,7 +3,6 @@ using UnityEngine;
 using MrRob.GameLogic;
 using MrRob.GUI;
 using MrRob.Objects;
-using MrRoboto.Objects;
 
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
@@ -106,7 +105,7 @@ namespace MrRob {
 			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			
-			gui.EnterState("Search");
+			gui.EnterState("SearchSettings");
 		}
 		
 		public void OnTileClick(Point pos) {
@@ -141,6 +140,8 @@ namespace MrRob {
 				Reset();
 			}
 
+			gui.EnterState("Search");
+			
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(false);
 			}
@@ -156,7 +157,7 @@ namespace MrRob {
 		public void Reset() {
 			StopAllCoroutines();
 			
-			gui.EnterState("Search");
+			gui.EnterState("SearchSettings");
 			
 			game.Reset();
 			foreach(TileBlock block in tileBlocks) {
