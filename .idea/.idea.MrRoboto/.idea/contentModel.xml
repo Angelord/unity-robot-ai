@@ -30,6 +30,7 @@
         </e>
         <e p="Objects" t="Include">
           <e p="MovingObject.cs" t="Include" />
+          <e p="ObjectStateMachine.cs" t="Include" />
         </e>
         <e p="Pathfinding" t="Include">
           <e p="Algorithms" t="Include">

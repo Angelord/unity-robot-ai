@@ -3,6 +3,7 @@ using UnityEngine;
 using MrRob.GameLogic;
 using MrRob.GUI;
 using MrRob.Objects;
+using MrRoboto.Objects;
 
 namespace MrRob {
 	public class GameManager : MonoBehaviour {
@@ -16,8 +17,7 @@ namespace MrRob {
 		[SerializeField] private GameObject robotPrefab;
 		[SerializeField] private GameObject cargoPrefab;
 		[SerializeField] private Vector2 minMaxCameraSz = new Vector2(6.0f, 12.5f);
-		[SerializeField] private SearchGUI searchGui;
-		[SerializeField] private ResultsGUI resultsGui;
+		[SerializeField] private ObjectStateMachine gui;
 		
 		private static GameManager instance;
 		private RobotGame game; 
@@ -105,7 +105,8 @@ namespace MrRob {
 			goal = Instantiate(goalPrefab, GridToWorldPos(game.GoalPosition), Quaternion.identity, this.transform);
 			robot = Instantiate(robotPrefab, GridToWorldPos(game.Robot.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
 			cargo = Instantiate(cargoPrefab, GridToWorldPos(game.Cargo.Position), Quaternion.identity, this.transform).GetComponent<MovingObject>();
-			searchGui.gameObject.SetActive(true);
+			
+			gui.EnterState("Search");
 		}
 		
 		public void OnTileClick(Point pos) {
@@ -154,8 +155,9 @@ namespace MrRob {
 
 		public void Reset() {
 			StopAllCoroutines();
-			searchGui.Show();
-			resultsGui.Hide();
+			
+			gui.EnterState("Search");
+			
 			game.Reset();
 			foreach(TileBlock block in tileBlocks) {
 				block.SetRevealed(true);
@@ -206,8 +208,9 @@ namespace MrRob {
 		}
 		
 		private void ShowResults(GameResult result) {
-			searchGui.Hide();
-			resultsGui.ShowResults(result);
+			gui.EnterState("Results");
+			gui.CurState.GetComponent<ResultsGUI>().ShowResults(result);
+			
 		}
 		
 		private Quaternion DirToLookRotation(Point direction) {

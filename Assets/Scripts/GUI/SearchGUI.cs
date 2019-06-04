@@ -32,15 +32,7 @@ namespace MrRob.GUI {
 		public void OnClick() {
 			DoAction();
 		}
-		
-		public void Show() {
-			this.gameObject.SetActive(true);
-		}
 
-		public void Hide() {
-			this.gameObject.SetActive(false);
-		}
-		
 		private void ShowSpeedMultiplier() {
 			StopAllCoroutines();
 			speedText.color = Color.white;

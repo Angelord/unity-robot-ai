@@ -12,7 +12,11 @@ namespace MrRob.GUI {
 		[SerializeField] private Text text;
 		[SerializeField] private float printFrequency = 0.01f;
 		[SerializeField] private GameManager manager;
-		
+
+		private void OnDisable() {
+			StopAllCoroutines();
+		}
+
 		public void ShowResults(GameResult result) {
 			StringBuilder builder = new StringBuilder();
 
@@ -25,13 +29,6 @@ namespace MrRob.GUI {
 			StartCoroutine(PrintResultText(builder.ToString()));
 		}
 
-		public void Hide() {
-			
-			StopAllCoroutines();
-			
-			this.gameObject.SetActive(false);
-		}
-		
 		public void OnClick() {
 			manager.Reset();
 		}
