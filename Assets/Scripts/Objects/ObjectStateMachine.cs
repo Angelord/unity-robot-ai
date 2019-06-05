@@ -4,6 +4,7 @@ using UnityEngine;
 namespace MrRob.Objects {
 	public class ObjectStateMachine : MonoBehaviour {
 
+		[SerializeField] private string globalState;
 		[SerializeField] private string defaultState;
 		private GameObject curState;
 
@@ -20,7 +21,9 @@ namespace MrRob.Objects {
 			
 			for (int i = 0; i < transform.childCount; i++) {
 				Transform child = transform.GetChild(i);
-				if (child.name != name && child.gameObject.activeSelf) {
+				if (child.name == globalState) {
+				}
+				else if (child.name != name && child.gameObject.activeSelf) {
 					child.gameObject.SetActive(false);
 				}
 				else if (child.name == name && !child.gameObject.activeSelf) {

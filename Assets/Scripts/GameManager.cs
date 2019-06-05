@@ -70,6 +70,10 @@ namespace MrRob {
 			return false;
 		}
 
+		public void Quit() {
+			Application.Quit();
+		}
+
 		public void Initialize(int width, int length) {
 
 			Camera cam = Camera.main;
