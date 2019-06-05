@@ -36,6 +36,12 @@ namespace MrRob.Pathfinding {
         }
 
         public void Append(Path other) {
+
+            if (pathNodes.Count == 0) {
+                pathNodes = other.pathNodes.ToList();
+                return;
+            }
+
             if(other.Start != End) {
                 throw new ArgumentException("To append a path its start node must match the target's end node.");
             }

@@ -14,6 +14,8 @@ namespace MrRob.GameLogic {
         }
     
         public override void OnEnter() {
+            Robot.Traverser.AvoidCargo = false;
+            
             Point cargoPos = Robot.Game.Cargo.Position;
             Point goalPos = Robot.Game.GoalPosition;
 
@@ -26,39 +28,58 @@ namespace MrRob.GameLogic {
             UnityEngine.Debug.Log("Cargo Path " + cargoPath);
             if(cargoPath.Exists) {
 
-                Dictionary<int, Point> cargoPositionsAtPathPoints = new Dictionary<int, Point>();
-
-                List<Point> botPath = new List<Point>();
+                List<PushSegment> pushSegments = new List<PushSegment>();
+                
                 for(int i = 1; i < cargoPath.Length; i++) {
                     Point dir = cargoPath[i] - cargoPath[i - 1];
-                    cargoPositionsAtPathPoints[botPath.Count] = cargoPath[i];
-                    cargoPositionsAtPathPoints[botPath.Count + 1] = cargoPath[i];
-                    botPath.Add(cargoPath[i - 1] - dir);
-                    botPath.Add(cargoPath[i - 1]);
+                    Point from = cargoPath[i - 1] - dir;
+                    Point to = cargoPath[i - 1];
+
+                    if (!Robot.Traverser.CanTraverse(Robot.Game.GetTile(from))) {
+                        Done("Cargo cannot be pushed to goal! - 1 " + from);
+                        return;
+                    }
+
+                    pushSegments.Add(new PushSegment(from, to));
                 }
 
                 Path finalPath = new Path();
-                finalPath.Append(botPath[0]);
-                for(int i  = 0; i < botPath.Count - 1; i++) {
-                    Robot.Traverser.FixedBlocks.Clear();
 
-                    if(botPath[i].GetDistance(botPath[i + 1]) != 1) {
-                        Robot.Traverser.FixedBlocks.Add(cargoPositionsAtPathPoints[i + 1]);
-                        Path pathToPushPos = Robot.Pathfinding.GetPath(botPath[i], botPath[i + 1], Robot.Traverser);
-                        if(!pathToPushPos.Exists) {
-                            Done("Cargo cannot be pushed to goal! 1");
-                            return;
-                        } 
-                        finalPath.Append(pathToPushPos);
+                if (Robot.Position != pushSegments[0].from) {
+                    Robot.Traverser.FixedBlocks.Add(cargoPos);
+                    Path pathToStart
+                        = Robot.Pathfinding.GetPath(Robot.Position, pushSegments[0].from, Robot.Traverser);
+                    
+                    if (!pathToStart.Exists) {
+                        Done("Cargo cannot be pushed to goal! - 2");
+                        return;
                     }
-                    else {
-                        finalPath.Append(botPath[i + 1]);
-                    }
-
+                    
+                    finalPath.Append(pathToStart);
+                    finalPath.Append(pushSegments[0].to);
                 }
 
+                for (int i = 1; i < pushSegments.Count; i++) {
+                    Robot.Traverser.FixedBlocks.Clear();
+                    
+                    PushSegment segment = pushSegments[i];
+                    PushSegment prevSegment = pushSegments[i - 1];
+                    if (prevSegment.to != segment.from) {
+                        Robot.Traverser.FixedBlocks.Add(segment.to);
+                        Path pathToSegment 
+                            = Robot.Pathfinding.GetPath(prevSegment.to, segment.from, Robot.Traverser);
+                        
+                        if(!pathToSegment.Exists) {
+                            Done("Cargo cannot be pushed to goal! - 2");
+                            return;
+                        } 
+                        
+                        finalPath.Append(pathToSegment);
+                    }
+                    
+                    finalPath.Append(segment.to);
+                }
                 Robot.Traverser.FixedBlocks.Clear();
-                UnityEngine.Debug.Log("Final path " + finalPath);
 
                 if(Robot.Position != finalPath[0]) {
                     Path pathToStart = Robot.Pathfinding.GetPath(Robot.Position, finalPath[0], Robot.Traverser);
@@ -73,7 +94,34 @@ namespace MrRob.GameLogic {
                 return;
             }
             
-            Done("Cargo cannot be pushed to the goal!");
+            Done("Cargo cannot be pushed to the goal! - 3");
+        }
+
+//        private bool LinkPositions(Path path, Point start, Point end, Point cargo) {
+//            Robot.Traverser.FixedBlocks.Add(cargo);
+//            Path linkingPath 
+//                = Robot.Pathfinding.GetPath(start, end, Robot.Traverser);
+//
+//            if (!linkingPath.Exists) {
+//                return false;
+//            }
+//
+//            path.Append(linkingPath);
+//            return true;
+//        }
+
+        public override void OnExit() {
+            Robot.Traverser.AvoidCargo = true;
+        }
+
+        private struct PushSegment {
+            public Point from;
+            public Point to;
+
+            public PushSegment(Point from, Point to) {
+                this.from = from;
+                this.to = to;
+            }
         }
     }
 }
