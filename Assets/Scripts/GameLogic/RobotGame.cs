@@ -23,9 +23,7 @@ namespace MrRob.GameLogic  {
 		public int Length { get { return length; } }
 		public Robot Robot { get { return robot; } }
 		public Cargo Cargo { get { return cargo; } }
-		public Point GoalPosition { get { return goalPos; }
-			set { goalPos = value; }
-		}
+		public Point GoalPosition { get { return goalPos; } set { goalPos = value; } }
 		public Tile[] Tiles { get { return tiles; } }
 		public bool Over { get { return over; } }
 
@@ -83,7 +81,7 @@ namespace MrRob.GameLogic  {
 		}
 
 		public void ToggleBlocking(Point pos) {
-			if(pos != cargo.Position && pos != goalPos) {
+			if(pos != cargo.Position && pos != goalPos && pos != robot.Position) {
 				Tile tile = GetTile(pos);
 				tile.Blocked = !tile.Blocked;
 			}

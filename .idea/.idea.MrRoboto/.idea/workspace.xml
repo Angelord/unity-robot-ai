@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="48054d23-6ea9-4cf1-a024-8123cd839e1d" name="Default Changelist" comment="" />
+    <list default="true" id="48054d23-6ea9-4cf1-a024-8123cd839e1d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +86,11 @@
               <item name="" type="e068e287:UnityExplorerRootNode" />
               <item name="Assets" type="8711f2a6:AssetsRoot" />
             </path>
+            <path>
+              <item name="" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="8711f2a6:AssetsRoot" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -146,12 +153,12 @@
       <workItem from="1559203316908" duration="3672000" />
       <workItem from="1559213284650" duration="610000" />
       <workItem from="1559656513903" duration="3336000" />
-      <workItem from="1559742100208" duration="1241000" />
+      <workItem from="1559742100208" duration="1439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17351000" />
+    <option name="totallyTimeSpent" value="17549000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
