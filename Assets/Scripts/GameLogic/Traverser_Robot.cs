@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MrRob.Pathfinding;
+using UnityEngine;
 
 namespace MrRob.GameLogic {
 
@@ -25,7 +26,7 @@ namespace MrRob.GameLogic {
         }
 
         public bool CanTraverse(Tile node) {
-            if(fixedBlocks.Contains(node.Position)) { 
+            if(fixedBlocks.Contains(node.Position)) {
                 return false; 
             }
 

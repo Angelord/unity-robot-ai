@@ -95,8 +95,8 @@ namespace MrRob.Pathfinding.Algorithms {
 
         private void AddToOpen(Point point) {
             PathfindingNode<T> target = GetNode(point);
-            if((traverser.CanMoveBetween(current.Data, target.Data) && traverser.CanTraverse(target.Data)) 
-            || point == endPos) {
+            if(traverser.CanMoveBetween(current.Data, target.Data) && (traverser.CanTraverse(target.Data) 
+            || point == endPos)) {
                 int gCost = current.GCost + traverser.GetTraverseCost(current.Data, target.Data);
                 if (!closedList.Contains(target) && !openList.Contains(target)) {
                     target.Parent = current;

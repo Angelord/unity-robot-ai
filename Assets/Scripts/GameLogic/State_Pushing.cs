@@ -61,7 +61,7 @@ namespace MrRob.GameLogic {
                     PushSegment prevSegment = pushSegments[i - 1];
                     if (prevSegment.to != segment.from) {
                         if (!LinkPositions(finalPath, prevSegment.to, segment.from, segment.to)) {
-                            Done("Cargo cannot be pushed to goal! - 2");
+                            Done("Cargo cannot be pushed to goal!");
                             return;
                         }
                     }
