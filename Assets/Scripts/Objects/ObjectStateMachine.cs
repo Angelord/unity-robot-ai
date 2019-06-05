@@ -28,6 +28,10 @@ namespace MrRob.Objects {
 					child.gameObject.SetActive(true);
 				}	
 			}
+
+			if (curState == null) {
+				Debug.LogWarning(String.Format("State not found : {0}.", name));
+			}
 		}
 	}
 

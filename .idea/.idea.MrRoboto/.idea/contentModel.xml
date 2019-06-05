@@ -24,6 +24,7 @@
         <e p="GridUtility.cs" t="Include" />
         <e p="GUI" t="Include">
           <e p="InitializationGUI.cs" t="Include" />
+          <e p="InputButton.cs" t="Include" />
           <e p="KeyCodeButton.cs" t="Include" />
           <e p="ResultsGUI.cs" t="Include" />
           <e p="SearchGUI.cs" t="Include" />

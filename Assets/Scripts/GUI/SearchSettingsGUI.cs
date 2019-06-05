@@ -9,12 +9,10 @@ namespace MrRob.GUI {
 
 		[SerializeField] private GameManager manager;
 		private Toggle toggle;
-		
-		private void Start() {
-			toggle = GetComponentInChildren<Toggle>();
-		}
 
 		private void OnEnable() {
+            toggle = GetComponentInChildren<Toggle>();
+		
 			if (manager.Initialized) {
 				toggle.isOn = manager.ExploreFirst;
 			}
