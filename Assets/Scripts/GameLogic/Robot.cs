@@ -51,7 +51,9 @@ namespace MrRob.GameLogic {
             orientation = Point.UP;
             cargoFound = false;
             prevState = null;
+            curState = null;
             traverser.AvoidCargo = true;
+            traverser.FixedBlocks.Clear();
 
             for(int i = 0; i < tilesRevealed.Length; i++) {
                 tilesRevealed[i] = false;
