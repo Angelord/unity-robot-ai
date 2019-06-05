@@ -9,18 +9,17 @@ namespace MrRob.GameLogic {
 
 		public State_Searching(Robot robot) : base(robot) {
 		}
-		
-		public override void OnEnter() {
 
+		public override void Reset() {
+			passedTiles.Clear();
 		}
-
+		
 		public override void Step() {
-
 			if(Robot.CargoFound && !Robot.ExploreFirst) {
 				Robot.EnterState("Pushing");
 				return;
 			}
-
+			
 			List<Point> neighbouringPnts = GridUtility.GetNeighbours(Robot.Position, Robot.Game.Width, Robot.Game.Length);
 
 			foreach(var neighbour in neighbouringPnts) {
@@ -55,6 +54,7 @@ namespace MrRob.GameLogic {
 				return;
 			}
 
+			Robot.Traverser.AvoidCargo = true;
 			Path pathToNearest = Robot.Pathfinding.GetPath(Robot.Position, nearest, Robot.Traverser);
 			if(!pathToNearest.Exists || pathToNearest.Length == 1) {
 				if (Robot.CargoFound) {
@@ -75,7 +75,14 @@ namespace MrRob.GameLogic {
 				return Point.MINUS;
 			}
 
-			return passedTiles[passedTiles.Count - 1];
+			for (int i = passedTiles.Count - 1; i >= 0; i--) {
+				if (!Robot.TileIsRevealed(passedTiles[i])) {
+					return passedTiles[i];
+				}
+				passedTiles.RemoveAt(i);
+			}
+
+			return Point.MINUS;
 		}
 	}
 }

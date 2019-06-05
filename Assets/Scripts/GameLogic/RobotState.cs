@@ -12,6 +12,9 @@ namespace MrRob.GameLogic {
 			this.robot = robot;
 		}
 
+		public virtual void Reset() {
+		}
+
 		public virtual void OnEnter() {
 		}
 

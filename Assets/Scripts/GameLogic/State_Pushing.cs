@@ -25,9 +25,8 @@ namespace MrRob.GameLogic {
             }
 
             Path cargoPath = Robot.Pathfinding.GetPath(cargoPos, goalPos, cargoTrav);
-            UnityEngine.Debug.Log("Cargo Path " + cargoPath);
+            
             if(cargoPath.Exists) {
-
                 List<PushSegment> pushSegments = new List<PushSegment>();
                 
                 for(int i = 1; i < cargoPath.Length; i++) {

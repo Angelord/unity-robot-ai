@@ -51,9 +51,14 @@ namespace MrRob.GameLogic {
             orientation = Point.UP;
             cargoFound = false;
             prevState = null;
+            traverser.AvoidCargo = true;
 
             for(int i = 0; i < tilesRevealed.Length; i++) {
                 tilesRevealed[i] = false;
+            }
+
+            foreach (var state in states) {
+                state.Value.Reset();
             }
 
             EnterState("Idle");
