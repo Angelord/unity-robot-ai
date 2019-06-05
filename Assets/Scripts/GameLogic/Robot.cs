@@ -15,7 +15,9 @@ namespace MrRob.GameLogic {
         private Point orientation;
         private bool[] tilesRevealed;
         private bool cargoFound;
+        private bool exploring;
         private bool exploreFirst = true;
+        private List<Point> frontier = new List<Point>();
 
         public RobotGame Game { get { return game; } }
         public Point Position { get { return position; } }
@@ -24,6 +26,7 @@ namespace MrRob.GameLogic {
         public Traverser_Robot Traverser { get { return traverser; } }
         public bool CargoFound { get { return cargoFound; } }
         public bool ExploreFirst { get { return exploreFirst; } set { exploreFirst = value; } }
+        public bool Exploring { get { return exploring; } set { exploring = value; } }
 
         public Robot(RobotGame game) {
             this.game = game;
@@ -50,10 +53,12 @@ namespace MrRob.GameLogic {
             position = Point.ZERO;
             orientation = Point.UP;
             cargoFound = false;
+            exploring = false;
             prevState = null;
             curState = null;
             traverser.AvoidCargo = true;
             traverser.FixedBlocks.Clear();
+            frontier.Clear();
 
             for(int i = 0; i < tilesRevealed.Length; i++) {
                 tilesRevealed[i] = false;
@@ -75,7 +80,32 @@ namespace MrRob.GameLogic {
         public void Look(Point direction) {
             orientation = direction;
         }
-        
+
+        public void ExpandFrontier() {
+            List<Point> neighbouringPnts = GridUtility.GetNeighbours(position, game.Width, game.Length);
+
+            foreach(var neighbour in neighbouringPnts) {
+                if(!TileIsRevealed(neighbour) && !frontier.Contains(neighbour)) {
+                    frontier.Add(neighbour);
+                }
+            }
+        }
+
+        public Point FindNearestUnrevealed() {
+            if (frontier.Count == 0) {
+                return Point.MINUS;
+            }
+
+            for (int i = frontier.Count - 1; i >= 0; i--) {
+                if (!TileIsRevealed(frontier[i])) {
+                    return frontier[i];
+                }
+                frontier.RemoveAt(i);
+            }
+
+            return Point.MINUS;
+        }
+
         public bool TryMove() {
             Point newPos = position + orientation;
 
@@ -84,6 +114,10 @@ namespace MrRob.GameLogic {
             }
 
             SetTileRevealed(newPos);
+            
+            if (exploring && frontier.Contains(newPos)) {
+                frontier.Remove(newPos);
+            }
 
             if(newPos == game.Cargo.Position) {
                 if(cargoFound) {
@@ -100,6 +134,11 @@ namespace MrRob.GameLogic {
             }
 
             position = newPos;
+
+            if (exploring) {
+                ExpandFrontier();
+            }
+
             return true;
         }
 
