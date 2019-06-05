@@ -143,8 +143,10 @@ namespace MrRob {
 
 			lastResult = game.Run();
 		
+			#if UNITY_EDITOR
 			Debug.Log(string.Format("Game Result : {0}. Message : {1}", lastResult.Success, lastResult.Message));
-
+			#endif
+			
 			StopAllCoroutines();
 			StartCoroutine(ReplaySimulation(lastResult));
 		}
