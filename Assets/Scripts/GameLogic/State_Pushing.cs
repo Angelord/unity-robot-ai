@@ -36,7 +36,7 @@ namespace MrRob.GameLogic {
                     Point to = cargoPath[i - 1];
 
                     if (!Robot.Traverser.CanTraverse(Robot.Game.GetTile(from))) {
-                        Done("Cargo cannot be pushed to goal! - 1 " + from);
+                        Done("Cargo cannot be pushed to goal!");
                         return;
                     }
 
@@ -45,41 +45,30 @@ namespace MrRob.GameLogic {
 
                 Path finalPath = new Path();
 
-                if (Robot.Position != pushSegments[0].from) {
-                    Robot.Traverser.FixedBlocks.Add(cargoPos);
-                    Path pathToStart
-                        = Robot.Pathfinding.GetPath(Robot.Position, pushSegments[0].from, Robot.Traverser);
-                    
-                    if (!pathToStart.Exists) {
-                        Done("Cargo cannot be pushed to goal! - 2");
+                if (Robot.Position != pushSegments[0].from) {  
+                    //Get to the start
+                    if (!LinkPositions(finalPath, Robot.Position, pushSegments[0].from, cargoPos)) {
+                        Done("Cargo cannot be pushed to goal!");
                         return;
                     }
-                    
-                    finalPath.Append(pathToStart);
-                    finalPath.Append(pushSegments[0].to);
                 }
+                else {
+                    finalPath.Append(pushSegments[0].from);
+                }
+                finalPath.Append(pushSegments[0].to);
 
                 for (int i = 1; i < pushSegments.Count; i++) {
-                    Robot.Traverser.FixedBlocks.Clear();
-                    
                     PushSegment segment = pushSegments[i];
                     PushSegment prevSegment = pushSegments[i - 1];
                     if (prevSegment.to != segment.from) {
-                        Robot.Traverser.FixedBlocks.Add(segment.to);
-                        Path pathToSegment 
-                            = Robot.Pathfinding.GetPath(prevSegment.to, segment.from, Robot.Traverser);
-                        
-                        if(!pathToSegment.Exists) {
+                        if (!LinkPositions(finalPath, prevSegment.to, segment.from, segment.to)) {
                             Done("Cargo cannot be pushed to goal! - 2");
                             return;
-                        } 
-                        
-                        finalPath.Append(pathToSegment);
+                        }
                     }
                     
                     finalPath.Append(segment.to);
                 }
-                Robot.Traverser.FixedBlocks.Clear();
 
                 if(Robot.Position != finalPath[0]) {
                     Path pathToStart = Robot.Pathfinding.GetPath(Robot.Position, finalPath[0], Robot.Traverser);
@@ -94,24 +83,26 @@ namespace MrRob.GameLogic {
                 return;
             }
             
-            Done("Cargo cannot be pushed to the goal! - 3");
+            Done("Cargo cannot be pushed to the goal!");
         }
 
-//        private bool LinkPositions(Path path, Point start, Point end, Point cargo) {
-//            Robot.Traverser.FixedBlocks.Add(cargo);
-//            Path linkingPath 
-//                = Robot.Pathfinding.GetPath(start, end, Robot.Traverser);
-//
-//            if (!linkingPath.Exists) {
-//                return false;
-//            }
-//
-//            path.Append(linkingPath);
-//            return true;
-//        }
+        private bool LinkPositions(Path path, Point start, Point end, Point cargo) {
+            Robot.Traverser.FixedBlocks.Clear();
+            Robot.Traverser.FixedBlocks.Add(cargo);
+            Path linkingPath 
+                = Robot.Pathfinding.GetPath(start, end, Robot.Traverser);
+
+            if (!linkingPath.Exists) {
+                return false;
+            }
+
+            path.Append(linkingPath);
+            return true;
+        }
 
         public override void OnExit() {
             Robot.Traverser.AvoidCargo = true;
+            Robot.Traverser.FixedBlocks.Clear();
         }
 
         private struct PushSegment {
